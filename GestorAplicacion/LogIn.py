@@ -1,4 +1,5 @@
 from usuarios.Empleado import Empleado
+from usuarios.Administrador import Administrador
 
 class LogIn:
 
@@ -18,13 +19,41 @@ class LogIn:
         return numero 
     
     @classmethod
-    def verificarCredenciales(cls,id,contraseña) -> bool:
+    def verificarCredenciales(cls,id,contraseña) -> Empleado:
         credencialesValidas = False
-        for usuario in Empleado.getTodolosUsuarios():
-            if usuario.getContraseña() == contraseña and usuario.getId() == id:
-                credencialesValidas = True
-            
-            return credencialesValidas
+        tempEmpleado = Empleado.buscarUsuario(id)
+        if tempEmpleado is not None and tempEmpleado.getContraseña() == contraseña:
+            credencialesValidas = True
+        return credencialesValidas
+
+    @classmethod
+    def verificarAdmin(cls,empleado):
+        if isinstance(empleado, Administrador):
+            LogIn.MenuAdministrador(empleado)
+        else:
+            LogIn.MenuEmpleados(empleado)
+
+    @classmethod
+    def MenuEmpleados(cls, empleado):
+        print()
+        print(f"--------- Bienvenido de nuevo {empleado.getNombre().upper()} ---------")
+        print("-------------- Empleado --------------")
+        print()
+        print("Seleccione alguna de las siguientes opciones: ")
+        print("1) Revisar Bandeja de Entrada.")
+        print("")
+        print("")
+
+    @classmethod
+    def MenuAdministrador(cls, empleado):
+        print()
+        print(f"--------- Bienvenido de nuevo {empleado.getNombre().upper()} ---------")
+        print("-------------- Administrador --------------")
+        print()
+        print("Seleccione alguna de las siguientes opciones: ")
+        print("1) Revisar Bandeja de Entrada.")
+        print("2) Enviar mensaje.")
+        print("3) Inventario")
 
     
     @classmethod
@@ -45,6 +74,9 @@ class LogIn:
 
             if credencialesValidas:
                 print("Credenciales Validas, Puede ingresar al sistema")
+
+                LogIn.verificarAdmin(Empleado.buscarUsuario(tempId))
+
             else:
                 print("Lo sentimos las credenciales no son correctas, intente nuevamente...")
         

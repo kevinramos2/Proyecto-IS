@@ -12,6 +12,15 @@ class Empleado:
     # TO STRING
     def __str__(self) -> str:
         return f"{self._nombre},{self._id},{self._contraseña}"
+    
+    @classmethod
+    def buscarUsuario(cls,id):
+        empleadoEncontrado = None
+        for empleado in Empleado._todosLosUsuarios:
+            if empleado.getId() == id:
+                empleadoEncontrado = empleado
+        return empleadoEncontrado
+        
 
     # GETTERS Y SETTERS
     def getNombre(self):
