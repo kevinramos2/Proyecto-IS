@@ -1,0 +1,59 @@
+class Producto:
+    def __init__(self, nombre=None, referencia=0, stock=0, categoria=None, color=None, precio=0, aroma=None):
+        self.nombre = nombre
+        self.referencia = referencia
+        self.stock = stock
+        self.categoria = categoria
+        self.color = color
+        self.precio = precio
+        self.aroma = aroma
+
+    def get_nombre(self):
+        return self.nombre
+
+    def set_nombre(self, nombre):
+        self.nombre = nombre
+
+    def get_referencia(self):
+        return self.referencia
+
+    def set_referencia(self, referencia):
+        self.referencia = referencia
+
+    def get_stock(self):
+        return self.stock
+
+    def set_stock(self, stock):
+        self.stock = stock
+
+    def get_categoria(self):
+        return self.categoria
+
+    def set_categoria(self, categoria):
+        self.categoria = categoria
+
+    def get_color(self):
+        return self.color
+
+    def set_color(self, color):
+        self.color = color
+
+    def get_precio(self):
+        return self.precio
+
+    def set_precio(self, precio):
+        self.precio = precio
+
+    def get_aroma(self):
+        return self.aroma
+
+    def set_aroma(self, aroma):
+        self.aroma = aroma
+
+    def __str__(self):
+        if self.categoria in ["Velon", "Vela Lisa", "Vela Lisa Baby"]:
+            return f"{self.nombre} - Color: {self.color} - Referencia: {self.referencia} - Precio: ${self.precio} - Cantidad: {self.stock} - Categoria: {self.categoria}"
+        elif self.categoria == "Esencia":
+            return f"{self.nombre} - Aroma: {self.aroma} - Referencia: {self.referencia} - Precio: ${self.precio} - Cantidad: {self.stock} - Categoria: {self.categoria}"
+        else:
+            return None
