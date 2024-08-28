@@ -1,5 +1,8 @@
 from usuarios.Empleado import Empleado
 from usuarios.Administrador import Administrador
+from usuarios.Decoradora import Decoradora
+from usuarios.Despachadora import Despachadora
+from usuarios.Fabricador import Fabricador
 
 class LogIn:
 
@@ -30,14 +33,40 @@ class LogIn:
     def verificarAdmin(cls,empleado):
         if isinstance(empleado, Administrador):
             LogIn.MenuAdministrador(empleado)
+        elif isinstance(empleado, Decoradora):
+            LogIn.MenuDecoradora(empleado)
+        elif isinstance(empleado, Fabricador):
+            LogIn.MenuFabricador(empleado)
         else:
-            LogIn.MenuEmpleados(empleado)
-
+            LogIn.MenuDespachadora(empleado)
+    
     @classmethod
-    def MenuEmpleados(cls, empleado):
+    def MenuDecoradora(cls,empleado):
         print()
         print(f"--------- Bienvenido de nuevo {empleado.getNombre().upper()} ---------")
-        print("-------------- Empleado --------------")
+        print("-------------- Fabricador --------------")
+        print()
+        print("Seleccione alguna de las siguientes opciones: ")
+        print("1) Revisar Bandeja de Entrada.")
+        print("")
+        print("")
+
+    @classmethod
+    def MenuFabricador(cls,empleado):
+        print()
+        print(f"--------- Bienvenido de nuevo {empleado.getNombre().upper()} ---------")
+        print("-------------- Fabricador --------------")
+        print()
+        print("Seleccione alguna de las siguientes opciones: ")
+        print("1) Revisar Bandeja de Entrada.")
+        print("")
+        print("")
+
+    @classmethod
+    def MenuDespachadora(cls, empleado):
+        print()
+        print(f"--------- Bienvenido de nuevo {empleado.getNombre().upper()} ---------")
+        print("-------------- Despachadora --------------")
         print()
         print("Seleccione alguna de las siguientes opciones: ")
         print("1) Revisar Bandeja de Entrada.")
@@ -51,9 +80,10 @@ class LogIn:
         print("-------------- Administrador --------------")
         print()
         print("Seleccione alguna de las siguientes opciones: ")
-        print("1) Revisar Bandeja de Entrada.")
+        print("1) Inventario")
         print("2) Enviar mensaje.")
-        print("3) Inventario")
+        print("3) Revisar Bandeja")
+        print("4) Reportes de ventas")
 
     
     @classmethod
