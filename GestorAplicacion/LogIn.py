@@ -83,7 +83,7 @@ class LogIn:
         print("1) Inventario")
         print("2) Enviar mensaje.")
         print("3) Revisar Bandeja")
-        print("4) Reportes de ventas")
+        print("4) Reportes de ventas") 
 
     
     @classmethod
