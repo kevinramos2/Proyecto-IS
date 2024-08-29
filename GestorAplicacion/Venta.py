@@ -1,5 +1,5 @@
 from datetime import datetime
-from GestorAplicacion.InventarioDoubleList import InventarioDoubleList
+from GestorAplicacion.Producto import Producto
 
 class Venta:
     _todas_las_ventas = []
@@ -27,14 +27,14 @@ class Venta:
     def total_venta(self, productos):
         suma_total = 0
         for producto in productos:
-            suma_total += producto.precio
+            suma_total += producto[0].get_precio()*producto[1]
         return suma_total
     
     def actualizar_estado(self, estado):
         self.estado = estado
     
     def registrar_venta(self, despachadora):
-        inventario = InventarioDoubleList()
+        
         print("Registro de nueva venta")
         print("-----------------------")
 
@@ -42,16 +42,23 @@ class Venta:
 
         # Registrar el producto
         while True:
-            id_producto = input("Ingrese el ID del producto: ")
-            producto = inventario.buscar_producto(id_producto)
+            id_producto = input("Ingrese el código de referencia del producto: ")
+ 
+            producto = Producto.inventario.buscar_producto(id_producto)
 
             if(producto):
                 cantidad_producto_requerido = input("Ingrese la cantidad del producto: ")
                 if cantidad_producto_requerido.isdigit() and int(cantidad_producto_requerido) > 0:
                     cantidad_producto_requerido = int(cantidad_producto_requerido)
-                    if(producto.existencias > cantidad_producto_requerido):
+                    if producto.stock >= cantidad_producto_requerido:
                         productos.append((producto, cantidad_producto_requerido))
-                        break
+                        print("Producto agregado correctamente.")
+                
+                        # Preguntar si desea agregar más productos
+                        agregar_mas = input("¿Desea agregar más productos? (Si/No): ")
+                
+                        if agregar_mas.lower() != "si":
+                            break
                     else:
                         print(f"Solo hay {cantidad_producto_requerido - producto.exitencias} exitencias de este producto")
                 else:
@@ -70,10 +77,8 @@ class Venta:
         
         # Seleccionar metodo de pago
         opciones_pago = {
-            '1': 'Tarjeta',
-            '2': 'Efectivo',
-            '3': 'Transferencia',
-            '4': 'Cheque'
+            "1": "Transferencia",
+            '2': 'Efectivo'
         }
         
         print("Seleccione el método de pago:")
@@ -92,7 +97,7 @@ class Venta:
         fecha_actual = datetime.now()
 
         # Generar id venta
-        id_venta = self.generarIDventa()
+        id_venta = self.crear_id_venta()
         
         # Total venta
         total_venta = self.total_venta(productos)
@@ -100,7 +105,7 @@ class Venta:
         #Confirmar pedido
         print("Confirmacion de venta")
         print("---------------------")
-        print(f"atendido por: {despachadora.nombre}")
+        print(f"atendido por: {despachadora.getNombre()}")
         print(f"ID venta: {id_venta}")
         print(f"ID Cliente: {id_cliente}")
         print(f"Fecha: {fecha_actual.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -117,7 +122,7 @@ class Venta:
                 self.estado = 'confirmada'
                 print("Pedido confirmado.")
                 for producto, cantidad in productos:
-                    inventario.actualizar_existencias(producto, cantidad)
+                    Producto.inventario.actualizar_existencias(producto, cantidad)
                 Venta(id_venta, id_cliente, productos, fecha_actual, total_venta)
                 break
             elif respuesta == 'N':

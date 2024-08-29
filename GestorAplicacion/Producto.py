@@ -1,5 +1,9 @@
+from GestorAplicacion.InventarioDoubleList import InventarioDoubleList
+
+
 class Producto:
-    def __init__(self, nombre=None, referencia=0, stock=0, categoria=None, precio=0, color=None, aroma=None):
+    inventario = InventarioDoubleList()
+    def __init__(self, nombre=None, referencia=None, stock=0, categoria=None, precio=0, color=None, aroma=None):
         self.nombre = nombre
         self.referencia = referencia
         self.stock = stock
@@ -10,9 +14,11 @@ class Producto:
         if categoria == "Esencia":
             self.aroma = aroma
             self.color = None  # No tiene color
-        else:
+        else: 
             self.color = color
             self.aroma = None  # No tiene aroma
+
+        Producto.inventario.agregar(self)
 
     def get_nombre(self):
         return self.nombre

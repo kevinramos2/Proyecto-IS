@@ -12,12 +12,13 @@ class InventarioDoubleList:
             self.inventario.add_last(producto)
 
     def buscar_producto(self, referencia):
+        encontrado = None
         temp = self.inventario.first()
         while temp is not None:
             if temp.get_data().get_referencia() == referencia:
-                return temp.get_data()
+                encontrado = temp.get_data()
             temp = temp.get_next()
-        return None
+        return encontrado
 
     def eliminar_producto(self, referencia):
         temp = self.inventario.first()
@@ -43,12 +44,12 @@ class InventarioDoubleList:
         temp = self.inventario.first()
         while temp is not None:
             if temp.get_data().get_categoria() == categoria:
-                print(temp.get_data())
+                print(temp.get_data().__str__())
             temp = temp.get_next()
     
     def actualizar_existencias(self, producto, cantidad_comprada):
         producto = self.buscar_producto(producto.referencia)
         if producto is not None:
-            producto.set_cantidad(producto.stock - cantidad_comprada)
+            producto.set_stock(producto.get_stock() - cantidad_comprada)
         else:
             print(f"Producto con referencia {producto.referencia} no encontrado.")
