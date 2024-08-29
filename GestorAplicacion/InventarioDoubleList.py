@@ -36,7 +36,7 @@ class InventarioDoubleList:
     def mostrar_completo(self):
         temp = self.inventario.first()
         while temp is not None:
-            print(temp.get_data())
+            print(temp.get_data().__str__())
             temp = temp.get_next()
 
     def mostrar_por_categoria(self, categoria):
