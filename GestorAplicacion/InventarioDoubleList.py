@@ -15,9 +15,9 @@ class InventarioDoubleList:
         temp = self.inventario.first()
         while temp is not None:
             if temp.get_data().get_referencia() == referencia:
-                return 1
+                return temp.get_data()
             temp = temp.get_next()
-        return -1
+        return None
 
     def eliminar_producto(self, referencia):
         temp = self.inventario.first()
@@ -45,3 +45,10 @@ class InventarioDoubleList:
             if temp.get_data().get_categoria() == categoria:
                 print(temp.get_data())
             temp = temp.get_next()
+    
+    def actualizar_existencias(self, producto, cantidad_comprada):
+        producto = self.buscar_producto(producto.referencia)
+        if producto is not None:
+            producto.set_cantidad(producto.stock - cantidad_comprada)
+        else:
+            print(f"Producto con referencia {producto.referencia} no encontrado.")

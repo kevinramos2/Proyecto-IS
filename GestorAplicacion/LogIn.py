@@ -3,6 +3,7 @@ from usuarios.Administrador import Administrador
 from usuarios.Decoradora import Decoradora
 from usuarios.Despachadora import Despachadora
 from usuarios.Fabricador import Fabricador
+from GestorAplicacion.Venta import Venta
 
 class LogIn:
 
@@ -70,8 +71,11 @@ class LogIn:
         print()
         print("Seleccione alguna de las siguientes opciones: ")
         print("1) Revisar Bandeja de Entrada.")
-        print("")
-        print("")
+        print("2) Registrar venta")
+        opcion = input()
+        if(opcion == '2'):
+            venta = Venta()
+            venta.registrar_venta(empleado)
 
     @classmethod
     def MenuAdministrador(cls, empleado):
