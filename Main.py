@@ -14,73 +14,73 @@ from GestorAplicacion.Producto import Producto
 
 
 if __name__ == "__main__":
-    #despachadora1 = Despachadora("Tomas",1025,"123")
-    #admin1 = Administrador("Kevin",1036,"987")
-    #fabricador1 = Fabricador("Alejandro", 1098, "hola")
-    #decoradora1 = Decoradora("Juan", 6785, "kkkk")
-    #Serializador.serializarEmpleados()
-    Deserializador.deserializarEmpleados()
-    
+    Deserializador.Deserializar()
 
-    # Crear productos
-    p1 = Producto("Velón #6", "001", 10, "Velon", 2500, "Blanco",None)
+    # despachadora1 = Despachadora("Tomas",1025,"123")
+    # admin1 = Administrador("Kevin",1036,"987")
+    # fabricador1 = Fabricador("Alejandro", 1098, "hola")
+    # decoradora1 = Decoradora("Juan", 6785, "kkkk")
     
-    p2 = Producto("Velón #6", "002", 10, "Velon", 2500, "Azul",None)
+    # # Crear productos
+    # p1 = Producto("Velón #6", "001", 10, "Velon", 2500, "Blanco",None)
+    
+    # p2 = Producto("Velón #6", "002", 10, "Velon", 2500, "Azul",None)
 
-    p3 =  Producto("Velón #6", "003", 10, "Velon", 2500, "Rojo",None)
+    # p3 =  Producto("Velón #6", "003", 10, "Velon", 2500, "Rojo",None)
   
-    p4 =  Producto("Velón #6", "004", 10, "Velon",  2500,"Amarillo",None)
+    # p4 =  Producto("Velón #6", "004", 10, "Velon",  2500,"Amarillo",None)
   
-    p5 =  Producto("Velón #15", "011", 10, "Velon", 6000,"Blanco",None)
+    # p5 =  Producto("Velón #15", "011", 10, "Velon", 6000,"Blanco",None)
    
-    p6 =  Producto("Velón #15", "012", 10, "Velon",  6000,"Azul",None)
+    # p6 =  Producto("Velón #15", "012", 10, "Velon",  6000,"Azul",None)
     
-    p7 =  Producto("Velón #15", "013", 10, "Velon",  6000,"Rojo",None)
+    # p7 =  Producto("Velón #15", "013", 10, "Velon",  6000,"Rojo",None)
     
-    p8 =  Producto("Velón #15", "014", 10, "Velon", 6000,"Amarillo",None )
+    # p8 =  Producto("Velón #15", "014", 10, "Velon", 6000,"Amarillo",None )
     
-    p9 =  Producto("Velón #25", "021", 10, "Velon",  15000,"Blanco",None)
+    # p9 =  Producto("Velón #25", "021", 10, "Velon",  15000,"Blanco",None)
  
-    p10 = Producto("Velón #25", "022", 10, "Velon",  15000,"Azul",None)
+    # p10 = Producto("Velón #25", "022", 10, "Velon",  15000,"Azul",None)
  
-    p11 = Producto("Velón #25", "023", 10, "Velon",  15000,"Rojo",None)
+    # p11 = Producto("Velón #25", "023", 10, "Velon",  15000,"Rojo",None)
 
-    p12 = Producto("Velón #25", "024", 10, "Velon",  15000,"Amarillo",None)
+    # p12 = Producto("Velón #25", "024", 10, "Velon",  15000,"Amarillo",None)
     
-    p13 = Producto("Vela Lisa Blanca", "111", 10, "Vela Lisa",  6000,"Blanco",None)
+    # p13 = Producto("Vela Lisa Blanca", "111", 10, "Vela Lisa",  6000,"Blanco",None)
  
-    p14 = Producto("Vela Lisa Azul", "112", 10, "Vela Lisa", 6000,"Azul",None)
+    # p14 = Producto("Vela Lisa Azul", "112", 10, "Vela Lisa", 6000,"Azul",None)
     
-    p15 = Producto("Vela Lisa Roja", "113", 10, "Vela Lisa", 6000, "Rojo",None)
+    # p15 = Producto("Vela Lisa Roja", "113", 10, "Vela Lisa", 6000, "Rojo",None)
 
-    p16 = Producto("Vela Lisa Amarilla", "114", 10, "Vela Lisa", 6000, "Amarillo",None)
+    # p16 = Producto("Vela Lisa Amarilla", "114", 10, "Vela Lisa", 6000, "Amarillo",None)
  
-    p17 = Producto("Vela Lisa Baby Blanca", "121", 10, "Vela Lisa Baby",  9000,"Blanco",None)
+    # p17 = Producto("Vela Lisa Baby Blanca", "121", 10, "Vela Lisa Baby",  9000,"Blanco",None)
 
-    p18 = Producto("Vela Lisa Baby Azul", "122", 10, "Vela Lisa Baby",  9000,"Azul",None)
+    # p18 = Producto("Vela Lisa Baby Azul", "122", 10, "Vela Lisa Baby",  9000,"Azul",None)
 
-    p19 = Producto("Vela Lisa Baby Roja", "123", 10, "Vela Lisa Baby",  9000,"Rojo",None)
+    # p19 = Producto("Vela Lisa Baby Roja", "123", 10, "Vela Lisa Baby",  9000,"Rojo",None)
 
-    p20 = Producto("Vela Lisa Baby Amarilla", "124", 10, "Vela Lisa Baby", 9000,"Amarillo",None)
+    # p20 = Producto("Vela Lisa Baby Amarilla", "124", 10, "Vela Lisa Baby", 9000,"Amarillo",None)
  
-    p21 = Producto("Esencia de Maracuyá", "201", 10, "Esencia",3000,None,"Maracuyá")
+    # p21 = Producto("Esencia de Maracuyá", "201", 10, "Esencia",3000,None,"Maracuyá")
   
-    p22 = Producto("Esencia de Mandarina", "202", 10, "Esencia",3000,None,"Mandarina",)
+    # p22 = Producto("Esencia de Mandarina", "202", 10, "Esencia",3000,None,"Mandarina",)
     
-    p23 = Producto("Esencia de Kiwi", "203", 10, "Esencia",3000,None,"Kiwi")
+    # p23 = Producto("Esencia de Kiwi", "203", 10, "Esencia",3000,None,"Kiwi")
     
-    p24 = Producto("Esencia de Naranja", "204", 10, "Esencia",3000,None,"Naranja")
+    # p24 = Producto("Esencia de Naranja", "204", 10, "Esencia",3000,None,"Naranja")
     
-    p25 = Producto("Esencia de Coco", "205", 10, "Esencia",3000,None,"Coco")
+    # p25 = Producto("Esencia de Coco", "205", 10, "Esencia",3000,None,"Coco")
     
-    p26 = Producto("Esencia de Talco", "206", 10, "Esencia",3000,None,"Talco")
+    # p26 = Producto("Esencia de Talco", "206", 10, "Esencia",3000,None,"Talco")
     
-    p27 = Producto("Esencia Chicle", "207", 10, "Esencia",3000,None,"Chicle")
+    # p27 = Producto("Esencia Chicle", "207", 10, "Esencia",3000,None,"Chicle")
    
-    p28 = Producto("Esencia de Tutti Frutti", "208", 10, "Esencia",3000,None,"Tutti Frutti")
+    # p28 = Producto("Esencia de Tutti Frutti", "208", 10, "Esencia",3000,None,"Tutti Frutti")
    
-    p29 = Producto("Esencia de Frutos Rojos","209", 10, "Esencia", 3000,None,"Frutos Rojos")
+    # p29 = Producto("Esencia de Frutos Rojos","209", 10, "Esencia", 3000,None,"Frutos Rojos")
 
-    p30 = Producto("Esencia de Canela", "210", 10, "Esencia",3000,None,"Canela")
-  
+    # p30 = Producto("Esencia de Canela", "210", 10, "Esencia",3000,None,"Canela")
+    
+    # Serializador.Serializar()
     LogIn.ImprimirLogIn()

@@ -6,6 +6,8 @@ from usuarios.Decoradora import Decoradora
 from usuarios.Despachadora import Despachadora
 from usuarios.Fabricador import Fabricador
 from GestorAplicacion.Venta import Venta
+from BaseDeDatos.serializador import Serializador
+from BaseDeDatos.deserializador import Deserializador
 
 class LogIn:
 
@@ -48,7 +50,7 @@ class LogIn:
         while True:
             print()
             print(f"--------- Bienvenido de nuevo {empleado.getNombre().upper()} ---------")
-            print("-------------- Fabricador --------------")
+            print("-------------- Decoradora --------------")
             print()
             print("Seleccione alguna de las siguientes opciones: ")
             print("1) Revisar Bandeja de Entrada.")
@@ -163,6 +165,7 @@ class LogIn:
                 print("=========================")
                 print("+   Cerrando Sesión...  +")
                 print("=========================")
+                Serializador.Serializar()
                 break
         LogIn.ImprimirLogIn()
                 
@@ -206,7 +209,10 @@ class LogIn:
                 print("WORK IN PROGRESS...")
 
             elif (opcion == "5"):
-                print("Cerrando Sesión...")
+                print("=========================")
+                print("+   Cerrando Sesión...  +")
+                print("=========================")
+                Serializador.Serializar()
                 break
         LogIn.ImprimirLogIn()
         
