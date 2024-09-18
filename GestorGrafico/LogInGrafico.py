@@ -58,6 +58,7 @@ class LogInGrafico(Frame):
             LabelImagen = Label(LogInFrame, image= foto, bg="#778DA9")
             LabelImagen.image = foto
             LabelImagen.pack(pady=(75,0))
+
         except Exception as e:
             print(f"Error al cargar la imagen: {e}")
 
@@ -65,11 +66,31 @@ class LogInGrafico(Frame):
         FrameAuxiliar.pack(padx=150, pady=(10,100))
         # Etiqueta para el id del usario
         self.EntryId = PlaceHolderEntry(FrameAuxiliar, placeholder="ID", width= 40, bd =5, bg = "#E0E1DD")
-        self.EntryId.grid(row=1, column=0,padx=10, pady=10, ipadx=2, ipady=2)
+        self.EntryId.grid(row=1, column=1,padx=10, pady=10, ipadx=2, ipady=2)
 
         # Etiqueta para la contraseña
         self.EntryContraseña = PlaceHolderEntry(FrameAuxiliar, placeholder="Contraseña", width=40, bd = 5, bg= "#E0E1DD")
-        self.EntryContraseña.grid(row=2, column=0,padx=10, pady=10,ipadx=2, ipady=2)
+        self.EntryContraseña.grid(row=2, column=1,padx=10, pady=10,ipadx=2, ipady=2)
+
+        try:
+            ImagenUsuarioEntry = Image.open("BaseDeDatos/Imagenes/user-solid-24.png")
+
+            foto2 = ImageTk.PhotoImage(ImagenUsuarioEntry)
+            LabelImagenUserEntry = Label(FrameAuxiliar, image=foto2, bg="#778DA9")
+            LabelImagenUserEntry.image = foto2
+            LabelImagenUserEntry.grid(row=1, column=0, padx=5)
+
+            ImagenLockEntry = Image.open("BaseDeDatos/Imagenes/lock-alt-solid-24.png")
+
+            foto3 = ImageTk.PhotoImage(ImagenLockEntry)
+            LabelImagenLockEntry = Label(FrameAuxiliar, image=foto3, bg="#778DA9")
+            LabelImagenLockEntry.image = foto3
+            LabelImagenLockEntry.grid(row=2, column=0, padx=5)
+
+        except Exception as e:
+            print(f"Error al cargar la imagen: {e}")
+
+        
 
         ButtonLogIn = Button(
             FrameAuxiliar, 
@@ -81,7 +102,7 @@ class LogInGrafico(Frame):
             pady=2,
             command= self.login)
         
-        ButtonLogIn.grid(row= 3, column=0, pady= 10)
+        ButtonLogIn.grid(row= 3, column=1, pady= 10)
 
     def login(self):
         id_Usuario = self.EntryId.get()
