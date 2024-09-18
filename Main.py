@@ -1,5 +1,4 @@
 import tkinter as tk
-import sys
 from GestorAplicacion import InventarioDoubleList, Producto
 from GestorAplicacion.LogIn import LogIn
 from usuarios.Administrador import Administrador

@@ -1,11 +1,4 @@
 from tkinter import *
-try:
-    from PIL import Image, ImageTk
-    image_lib_avaible = True
-except ImportError:
-    image_lib_avaible = False
-    print("El módulo PIL (Pillow) no está instalado. Algunas funcionalidades pueden no estar disponibles.")
-
 import tkinter as tk
 from GestorAplicacion.LogIn import LogIn
 from tkinter import messagebox
@@ -56,18 +49,16 @@ class LogInGrafico(Frame):
         LogInFrame = Frame(self, height= 350, width= 500, bg="#778DA9")
         LogInFrame.grid(row= 1, column= 0, padx=10, pady=10)
         
-        if image_lib_avaible:
-            try:
-                ImagenUsuarioCircular = Image.open("BaseDeDatos/Imagenes/user-circle-regular-120.png")
 
-                foto = ImageTk.PhotoImage(ImagenUsuarioCircular)
+        # Importar imagenes
+        ImagenUsuarioCircular = "BaseDeDatos/Imagenes/user-circle-regular-120.png"
 
-                LabelImagen = Label(LogInFrame, image= foto, bg="#778DA9")
-                LabelImagen.image = foto
-                LabelImagen.pack(pady=(75,0))
+        foto = tk.PhotoImage(file=ImagenUsuarioCircular)
 
-            except Exception as e:
-                print(f"Error al cargar la imagen: {e}")
+        LabelImagen = Label(LogInFrame, image= foto, bg="#778DA9")
+        LabelImagen.image = foto
+        LabelImagen.pack(pady=(75,0))
+
 
         FrameAuxiliar = Frame(LogInFrame,bg="#778DA9" )
         FrameAuxiliar.pack(padx=150, pady=(10,100))
@@ -79,26 +70,22 @@ class LogInGrafico(Frame):
         self.EntryContraseña = PlaceHolderEntry(FrameAuxiliar, placeholder="Contraseña", width=40, bd = 5, bg= "#E0E1DD")
         self.EntryContraseña.grid(row=2, column=1,padx=10, pady=10,ipadx=2, ipady=2)
 
-        if image_lib_avaible:
-            try:
-                ImagenUsuarioEntry = Image.open("BaseDeDatos/Imagenes/user-solid-24.png")
-
-                foto2 = ImageTk.PhotoImage(ImagenUsuarioEntry)
-                LabelImagenUserEntry = Label(FrameAuxiliar, image=foto2, bg="#778DA9")
-                LabelImagenUserEntry.image = foto2
-                LabelImagenUserEntry.grid(row=1, column=0, padx=2)
-
-                ImagenLockEntry = Image.open("BaseDeDatos/Imagenes/lock-alt-solid-24.png")
-
-                foto3 = ImageTk.PhotoImage(ImagenLockEntry)
-                LabelImagenLockEntry = Label(FrameAuxiliar, image=foto3, bg="#778DA9")
-                LabelImagenLockEntry.image = foto3
-                LabelImagenLockEntry.grid(row=2, column=0, padx=2)
-
-            except Exception as e:
-                print(f"Error al cargar la imagen: {e}")
-
         
+        # Importar imagenes
+        ImagenUsuarioEntry = "BaseDeDatos/Imagenes/user-solid-24.png"
+
+        foto2 = tk.PhotoImage(file=ImagenUsuarioEntry)
+        LabelImagenUserEntry = Label(FrameAuxiliar, image=foto2, bg="#778DA9")
+        LabelImagenUserEntry.image = foto2
+        LabelImagenUserEntry.grid(row=1, column=0, padx=2)
+
+        ImagenLockEntry = "BaseDeDatos/Imagenes/lock-alt-solid-24.png"
+
+        foto3 = tk.PhotoImage(file=ImagenLockEntry)
+        LabelImagenLockEntry = Label(FrameAuxiliar, image=foto3, bg="#778DA9")
+        LabelImagenLockEntry.image = foto3
+        LabelImagenLockEntry.grid(row=2, column=0, padx=2)
+
 
         ButtonLogIn = Button(
             FrameAuxiliar, 
@@ -115,9 +102,6 @@ class LogInGrafico(Frame):
     def login(self):
         id_Usuario = self.EntryId.get()
         contraseña_Usuario = self.EntryContraseña.get()
-        print(type(id_Usuario))
-        print(type(contraseña_Usuario))
-
         NumeroIdUser = 0 
 
         try:
