@@ -1,3 +1,5 @@
+import tkinter as tk
+import sys
 from GestorAplicacion import InventarioDoubleList, Producto
 from GestorAplicacion.LogIn import LogIn
 from usuarios.Administrador import Administrador
@@ -8,9 +10,20 @@ from BaseDeDatos.deserializador import Deserializador
 from BaseDeDatos.serializador import Serializador
 from GestorAplicacion.InventarioDoubleList import InventarioDoubleList
 from GestorAplicacion.Producto import Producto
+from GestorGrafico.LogInGrafico import LogInGrafico
 
 
+class MainWindow(tk.Tk):
 
+    def __init__(self):
+        super().__init__()
+        self.title("Agario Solutions")
+        self.resizable(0,0)
+        self.geometry("865x625")
+        
+
+        Login_Frame = LogInGrafico(self)
+        
 
 
 if __name__ == "__main__":
@@ -83,4 +96,8 @@ if __name__ == "__main__":
     # p30 = Producto("Esencia de Canela", "210", 10, "Esencia",3000,None,"Canela")
     
     # Serializador.Serializar()
-    LogIn.ImprimirLogIn()
+    #LogIn.ImprimirLogIn()
+    window  = MainWindow()
+    window.mainloop()
+
+

@@ -27,7 +27,7 @@ class LogIn:
         return numero 
     
     @classmethod
-    def verificarCredenciales(cls,id,contraseña) -> Empleado:
+    def verificarCredenciales(cls,id,contraseña) -> bool:
         credencialesValidas = False
         tempEmpleado = Empleado.buscarUsuario(id)
         if tempEmpleado is not None and tempEmpleado.getContraseña() == contraseña:
