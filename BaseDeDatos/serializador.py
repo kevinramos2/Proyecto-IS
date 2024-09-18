@@ -6,12 +6,12 @@ class Serializador:
 
     @classmethod
     def serializarEmpleados(cls,lista_objetos):
-        with open('BaseDeDatos\\temp\\Empleados.pkl','wb') as file:
+        with open('BaseDeDatos/temp/Empleados.pkl','wb') as file:
             pickle.dump(lista_objetos,file)
     
     @classmethod
     def serializarProductos(cls,lista_objetos):
-        with open('BaseDeDatos\\temp\\Productos.pkl','wb') as file:
+        with open('BaseDeDatos/temp/Productos.pkl','wb') as file:
             pickle.dump(lista_objetos,file)
 
     @classmethod
