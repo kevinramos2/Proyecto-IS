@@ -1,4 +1,4 @@
-import tkinter as tk
+import tkinter as tk 
 from GestorAplicacion import InventarioDoubleList, Producto
 from GestorAplicacion.LogIn import LogIn
 from usuarios.Administrador import Administrador
@@ -19,8 +19,6 @@ class MainWindow(tk.Tk):
         self.title("Agario Solutions")
         self.resizable(0,0)
         self.geometry("865x625")
-        
-
         Login_Frame = LogInGrafico(self)
         
 

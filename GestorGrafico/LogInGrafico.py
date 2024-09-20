@@ -1,8 +1,14 @@
 from tkinter import *
 import tkinter as tk
 from GestorAplicacion.LogIn import LogIn
+from usuarios.Empleado import Empleado
+from usuarios.Administrador import Administrador
+from usuarios.Decoradora import Decoradora
+from usuarios.Fabricador import Fabricador
+from usuarios.Despachadora import Despachadora
 from tkinter import messagebox
-
+from GestorGrafico.MenuAdmin import MenuAdmin
+from GestorGrafico.MenuDespachadora import MenuDespachadora
 
 class PlaceHolderEntry(Entry):
     def __init__(self, parent, placeholder="", *args, **kwargs):
@@ -32,10 +38,24 @@ class LogInGrafico(Frame):
         super().__init__(ventana)
         self.config(bg="#E0E1DD", width=400, height=350)
         self.pack(fill="both",expand=True)
+        self.ventana = ventana
+        self.ventana.config(menu="")
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(0, weight=1)
+
+        # Barra del Menu
+        menuBar = Menu(self.ventana)
+        self.ventana.option_add("*tearOff", False)
+        self.ventana.config(menu=menuBar)
+
+        #Menu para salir 
+        menuSalir = Menu(menuBar)
+        menuBar.add_cascade(label="Salir", menu=menuSalir, activebackground="#3A4D39")
+
+        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#3A4D39", command=self.ventana.destroy)
+
 
         # Frame para el Mensaje de Bienvenida
         LabelFrame = Frame(self, height=100, bg="#415A77", padx=5, pady=5)
@@ -99,6 +119,15 @@ class LogInGrafico(Frame):
         
         ButtonLogIn.grid(row= 3, column=1, pady= 10)
 
+
+    def centrar_ventana(self,ventana,ancho,alto):
+        #Funcion para centrar una ventana en la pantalla
+        pantalla_ancho = ventana.winfo_screenwidth()
+        pantalla_alto = ventana.winfo_screenheight()
+        x = (pantalla_ancho // 2) - (ancho // 2)
+        y = (pantalla_alto // 2) - (alto // 2)
+        ventana.geometry(f"{ancho}x{alto}+{x}+{y}")
+
     def login(self):
         id_Usuario = self.EntryId.get()
         contraseña_Usuario = self.EntryContraseña.get()
@@ -108,13 +137,44 @@ class LogInGrafico(Frame):
             NumeroIdUser = int(id_Usuario)
         except:
             messagebox.showerror("Login", "Ingrese un id valido")
+        else:  
+            CredencialesCorrectas = LogIn.verificarCredenciales(NumeroIdUser, contraseña_Usuario)
+            if CredencialesCorrectas:
+                messagebox.showinfo("Login", "Login correcto, puede ingresar")
 
-        CredencialesCorrectas = LogIn.verificarCredenciales(NumeroIdUser, contraseña_Usuario)
-            
-        if CredencialesCorrectas:
-            messagebox.showinfo("Login", "Login correcto, puede ingresar")
-        else:
-            messagebox.showerror("Login", "Id o contraseña invalidas")
+                UsuarioRegistrado = Empleado.buscarUsuario(NumeroIdUser)
+                print(UsuarioRegistrado)
+                
+                if isinstance(UsuarioRegistrado, Administrador):
+                    self.destroy()
+                    MenuAdmin(self.ventana, UsuarioRegistrado)
+                elif isinstance(UsuarioRegistrado, Despachadora):
+                    self.destroy()
+                    MenuDespachadora(self.ventana, UsuarioRegistrado)
+
+                #elif isinstance(UsuarioRegistrado, Fabricador):
+                    
+                #else:
+                    
+            else:
+                # ventana_emergente = tk.Toplevel(self)
+                # ventana_emergente.title("Error al iniciar sesion.")
+                # ventana_emergente.geometry("350x150")
+                # ventana_emergente.config(bg="#e0e0e0")
+
+                # # Centrar la ventana Toplevel en la pantalla
+                # self.centrar_ventana(ventana_emergente,250,100)
+
+                # # Añadir un mensaje dentro de la ventana
+                # mensaje = tk.Label(ventana_emergente, text="Id o contraseña invalidas. Intente nuevamente.", bg="#e0e0e0", font=("Arial",12,"bold"), wraplength=200)
+                # mensaje.pack(pady=10)
+
+                # # Boton para cerrar la ventana emergente
+                # boton_cerrar = tk.Button(ventana_emergente, text="Cerrar", command= ventana_emergente.destroy, bg="#007bff", fg="white", font=("Arial", 10, "bold"))
+                # boton_cerrar.pack(pady=10)
+
+                
+                messagebox.showerror("Login", "Id o contraseña invalidas. Intente nuevamente.")
 
 
         

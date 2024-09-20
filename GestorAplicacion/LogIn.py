@@ -44,7 +44,7 @@ class LogIn:
             LogIn.MenuFabricador(empleado)
         else:
             LogIn.MenuDespachadora(empleado)
-    
+            
     @classmethod
     def MenuDecoradora(cls,empleado):
         while True:
