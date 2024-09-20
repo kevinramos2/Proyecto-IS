@@ -122,7 +122,7 @@ class MenuAdmin(Frame):
         botonAgregar = Button(inventarioFrame, text="Crear Producto", bg="#E0E1DD", font=("Arial", 15), command=self.agregarProducto)
         botonAgregar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
-        botonBuscar = Button(inventarioFrame, text="Buscar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.buscarProducto)
+        botonBuscar = Button(inventarioFrame, text="Modificar Stock", bg="#E0E1DD", font=("Arial", 15), command=self.buscarProducto)
         botonBuscar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
         botonEliminar = Button(inventarioFrame, text="Eliminar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.eliminarProducto)
