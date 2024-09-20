@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from GestorAplicacion.DoubleList import DoubleList
 from GestorAplicacion.InventarioDoubleList import InventarioDoubleList
-from GestorAplicacion.Producto import Producto  # Asegúrate de que esta clase esté correctamente importada
+from GestorAplicacion.Producto import Producto  
 
 class MenuAdmin(Frame):
     def __init__(self, ventana, empleado):
@@ -245,6 +245,7 @@ class MenuAdmin(Frame):
         # Crear y agregar el producto al inventario
         try:
             producto = Producto(nombre, referencia, int(stock), categoria, float(precio), color, aroma)
+            print(producto.__str__())
             messagebox.showinfo("Éxito", f"Producto '{nombre}' agregado exitosamente.")
             ventana.destroy()  # Cierra la ventana después de agregar el producto
         except Exception as e:
@@ -261,7 +262,7 @@ class MenuAdmin(Frame):
         Button(buscarWin, text="Buscar", command=lambda: self.mostrarProducto(buscarWin, referencia.get())).grid(row=1, column=0, columnspan=2)
 
     def mostrarProducto(self, ventana, referencia):
-        producto = self.inventario.buscar(referencia)
+        producto = self.inventario.buscar_producto(referencia)
         if producto:
             messagebox.showinfo("Producto Encontrado", str(producto))
         else:
@@ -289,11 +290,12 @@ class MenuAdmin(Frame):
 
     def mostrarInventarioCompleto(self):
         # Mostrar el inventario completo usando la clase InventarioDoubleList
-        productos = self.inventario.mostrar_completo()
-        if productos:
-            messagebox.showinfo("Inventario Completo", "\n".join(str(p) for p in productos))
-        else:
-            messagebox.showinfo("Inventario", "El inventario está vacío.")
+        inventario = self.inventario.mostrar_completo()
+        if inventario is None:
+            print("El inventario está vació")
+            return
+        for producto in inventario:
+            self.listbox.insert(END, producto.getNombre())
 
     def volverMenu(self, frameActual):
         # Destruir el frame actual
