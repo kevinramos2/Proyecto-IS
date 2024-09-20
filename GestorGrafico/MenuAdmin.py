@@ -41,7 +41,23 @@ class MenuAdmin(Frame):
         FrameFuncionalidades.pack_propagate(False)
         FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
 
-        
+         # Definimos funciones para cada botón
+        def abrirInventario():
+            print("Abriendo Inventario")
+           
+
+        def verReporteVentas():
+            print("Mostrando Reporte de Ventas")
+          
+
+        def enviarMensaje():
+            print("Enviar Mensaje")
+           
+
+        def revisarMensaje():
+            print("Revisar Mensajes")
+
+
         # Botones de funcionalidades
         botonInventario = Button(
             FrameFuncionalidades, 
@@ -50,7 +66,8 @@ class MenuAdmin(Frame):
             font=("Arial", 20, "bold"),
             width=10, 
             padx=2, 
-            pady=2)
+            pady=2,
+            command=abrirInventario)
         
         botonInventario.pack(fill="x", side="top",expand=True, padx= 5)
 
@@ -61,7 +78,8 @@ class MenuAdmin(Frame):
             font=("Arial", 20, "bold"),
             width=10, 
             padx=2, 
-            pady=2)
+            pady=2,
+            command=verReporteVentas)
         
         botonReportes.pack(fill="x", side="top",expand=True, padx=5)
 
@@ -72,7 +90,8 @@ class MenuAdmin(Frame):
             font=("Arial", 20, "bold"),
             width=10, 
             padx=2, 
-            pady=2)
+            pady=2,
+            command=enviarMensaje)
         
         botonEnviar.pack(fill="x", side="top",expand=True, padx=5)
 
@@ -83,7 +102,8 @@ class MenuAdmin(Frame):
             font=("Arial", 20, "bold"),
             width=10, 
             padx=2, 
-            pady=2)
+            pady=2,
+            command=revisarMensaje)
         
         botonRevisar.pack(fill="x", side="top",expand=True, padx=5)
        
