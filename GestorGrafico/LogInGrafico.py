@@ -52,9 +52,9 @@ class LogInGrafico(Frame):
 
         #Menu para salir 
         menuSalir = Menu(menuBar)
-        menuBar.add_cascade(label="Salir", menu=menuSalir, activebackground="#3A4D39")
+        menuBar.add_cascade(label="Salir", menu=menuSalir, activebackground="#415A77")
 
-        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#3A4D39", command=self.ventana.destroy)
+        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=self.ventana.destroy)
 
 
         # Frame para el Mensaje de Bienvenida
@@ -120,14 +120,6 @@ class LogInGrafico(Frame):
         ButtonLogIn.grid(row= 3, column=1, pady= 10)
 
 
-    def centrar_ventana(self,ventana,ancho,alto):
-        #Funcion para centrar una ventana en la pantalla
-        pantalla_ancho = ventana.winfo_screenwidth()
-        pantalla_alto = ventana.winfo_screenheight()
-        x = (pantalla_ancho // 2) - (ancho // 2)
-        y = (pantalla_alto // 2) - (alto // 2)
-        ventana.geometry(f"{ancho}x{alto}+{x}+{y}")
-
     def login(self):
         id_Usuario = self.EntryId.get()
         contraseña_Usuario = self.EntryContraseña.get()
@@ -157,22 +149,6 @@ class LogInGrafico(Frame):
                 #else:
                     
             else:
-                # ventana_emergente = tk.Toplevel(self)
-                # ventana_emergente.title("Error al iniciar sesion.")
-                # ventana_emergente.geometry("350x150")
-                # ventana_emergente.config(bg="#e0e0e0")
-
-                # # Centrar la ventana Toplevel en la pantalla
-                # self.centrar_ventana(ventana_emergente,250,100)
-
-                # # Añadir un mensaje dentro de la ventana
-                # mensaje = tk.Label(ventana_emergente, text="Id o contraseña invalidas. Intente nuevamente.", bg="#e0e0e0", font=("Arial",12,"bold"), wraplength=200)
-                # mensaje.pack(pady=10)
-
-                # # Boton para cerrar la ventana emergente
-                # boton_cerrar = tk.Button(ventana_emergente, text="Cerrar", command= ventana_emergente.destroy, bg="#007bff", fg="white", font=("Arial", 10, "bold"))
-                # boton_cerrar.pack(pady=10)
-
                 
                 messagebox.showerror("Login", "Id o contraseña invalidas. Intente nuevamente.")
 

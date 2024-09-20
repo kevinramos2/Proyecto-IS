@@ -37,5 +37,54 @@ class MenuAdmin(Frame):
 
 
         # Frame que va a contener todas las funcionalidades del Administrador
-        LaberFuncionalidades = Frame(self, height= 400, width= 500, bg="#415A77")
-        LaberFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
+        FrameFuncionalidades = Frame(self, height= 400, width= 500, bg="#415A77")
+        FrameFuncionalidades.pack_propagate(False)
+        FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
+
+        
+        # Botones de funcionalidades
+        botonInventario = Button(
+            FrameFuncionalidades, 
+            text="Inventario",
+            bg="#E0E1DD",
+            font=("Arial", 20, "bold"),
+            width=10, 
+            padx=2, 
+            pady=2)
+        
+        botonInventario.pack(fill="x", side="top",expand=True, padx= 5)
+
+        botonReportes = Button(
+            FrameFuncionalidades, 
+            text="Reporte de Ventas",
+            bg="#E0E1DD",
+            font=("Arial", 20, "bold"),
+            width=10, 
+            padx=2, 
+            pady=2)
+        
+        botonReportes.pack(fill="x", side="top",expand=True, padx=5)
+
+        botonEnviar = Button(
+            FrameFuncionalidades, 
+            text="Enviar Mensaje",
+            bg="#E0E1DD",
+            font=("Arial", 20, "bold"),
+            width=10, 
+            padx=2, 
+            pady=2)
+        
+        botonEnviar.pack(fill="x", side="top",expand=True, padx=5)
+
+        botonRevisar = Button(
+            FrameFuncionalidades, 
+            text="Revisar Mensaje",
+            bg="#E0E1DD",
+            font=("Arial", 20, "bold"),
+            width=10, 
+            padx=2, 
+            pady=2)
+        
+        botonRevisar.pack(fill="x", side="top",expand=True, padx=5)
+       
+       
