@@ -119,7 +119,7 @@ class MenuAdmin(Frame):
         tituloLabel.pack(pady=10)
 
         # Opciones del inventario
-        botonAgregar = Button(inventarioFrame, text="Agregar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.agregarProducto)
+        botonAgregar = Button(inventarioFrame, text="Crear Producto", bg="#E0E1DD", font=("Arial", 15), command=self.agregarProducto)
         botonAgregar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
         botonBuscar = Button(inventarioFrame, text="Buscar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.buscarProducto)
@@ -128,7 +128,7 @@ class MenuAdmin(Frame):
         botonEliminar = Button(inventarioFrame, text="Eliminar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.eliminarProducto)
         botonEliminar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
-        botonMostrar = Button(inventarioFrame, text="Mostrar Inventario Completo", bg="#E0E1DD", font=("Arial", 15), command=self.mostrarInventarioCompleto)
+        botonMostrar = Button(inventarioFrame, text="Ver Inventario", bg="#E0E1DD", font=("Arial", 15), command=self.mostrarInventarioCompleto)
         botonMostrar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
         # Botón para volver al menú principal
