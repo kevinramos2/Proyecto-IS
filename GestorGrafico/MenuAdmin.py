@@ -34,33 +34,27 @@ class MenuAdmin(Frame):
         menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=self.ventana.destroy)
         menuSalir.add_cascade(label="Cerrar Sesion", activebackground="#415A77",command=cerrarSesion)
 
-
-
         # Frame que va a contener todas las funcionalidades del Administrador
-        FrameFuncionalidades = Frame(self, height= 400, width= 500, bg="#415A77")
-        FrameFuncionalidades.pack_propagate(False)
-        FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
+        self.FrameFuncionalidades = Frame(self, height= 400, width= 500, bg="#415A77")
+        self.FrameFuncionalidades.pack_propagate(False)
+        self.FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
 
-         # Definimos funciones para cada botón
+        # Definimos funciones para cada botón
         def abrirInventario():
-            print("Abriendo Inventario")
-           
+            self.mostrarNuevoFrame("Inventario", ["Producto 1", "Producto 2", "Producto 3"])
 
         def verReporteVentas():
-            print("Mostrando Reporte de Ventas")
-          
+            self.mostrarNuevoFrame("Reporte de Ventas", ["Total Ventas: 5000", "Ventas de Hoy: 300"])
 
         def enviarMensaje():
-            print("Enviar Mensaje")
-           
+            self.mostrarNuevoFrame("Enviar Mensaje", ["Escribe tu mensaje aquí:"])
 
         def revisarMensaje():
-            print("Revisar Mensajes")
-
+            self.mostrarNuevoFrame("Revisar Mensaje", ["Mensaje 1: Hola", "Mensaje 2: Buenas"])
 
         # Botones de funcionalidades
         botonInventario = Button(
-            FrameFuncionalidades, 
+            self.FrameFuncionalidades, 
             text="Inventario",
             bg="#E0E1DD",
             font=("Arial", 20, "bold"),
@@ -72,7 +66,7 @@ class MenuAdmin(Frame):
         botonInventario.pack(fill="x", side="top",expand=True, padx= 5)
 
         botonReportes = Button(
-            FrameFuncionalidades, 
+            self.FrameFuncionalidades, 
             text="Reporte de Ventas",
             bg="#E0E1DD",
             font=("Arial", 20, "bold"),
@@ -84,7 +78,7 @@ class MenuAdmin(Frame):
         botonReportes.pack(fill="x", side="top",expand=True, padx=5)
 
         botonEnviar = Button(
-            FrameFuncionalidades, 
+            self.FrameFuncionalidades, 
             text="Enviar Mensaje",
             bg="#E0E1DD",
             font=("Arial", 20, "bold"),
@@ -96,7 +90,7 @@ class MenuAdmin(Frame):
         botonEnviar.pack(fill="x", side="top",expand=True, padx=5)
 
         botonRevisar = Button(
-            FrameFuncionalidades, 
+            self.FrameFuncionalidades, 
             text="Revisar Mensaje",
             bg="#E0E1DD",
             font=("Arial", 20, "bold"),
@@ -106,5 +100,31 @@ class MenuAdmin(Frame):
             command=revisarMensaje)
         
         botonRevisar.pack(fill="x", side="top",expand=True, padx=5)
-       
-       
+
+    def mostrarNuevoFrame(self, titulo, contenido):
+        # Elimina el frame de funcionalidades actual
+        self.FrameFuncionalidades.pack_forget()
+
+        # Crear un nuevo frame para la funcionalidad seleccionada
+        nuevoFrame = Frame(self, bg="#1B263B")
+        nuevoFrame.pack(fill="both", expand=True)
+
+        # Mostrar el título de la funcionalidad
+        tituloLabel = Label(nuevoFrame, text=titulo, font=("Arial", 25, "bold"), bg="#1B263B", fg="white")
+        tituloLabel.pack(pady=10)
+
+        # Añadir el contenido de la funcionalidad
+        for item in contenido:
+            contenidoLabel = Label(nuevoFrame, text=item, font=("Arial", 15), bg="#1B263B", fg="white")
+            contenidoLabel.pack(pady=5)
+
+        # Añadir botón para volver al menú principal
+        botonVolver = Button(nuevoFrame, text="Volver", bg="#E0E1DD", font=("Arial", 15), command=lambda: self.volverMenu(nuevoFrame))
+        botonVolver.pack(pady=10)
+
+    def volverMenu(self, frameActual):
+        # Destruir el frame actual
+        frameActual.pack_forget()
+
+        # Volver a mostrar el frame de funcionalidades
+        self.FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
