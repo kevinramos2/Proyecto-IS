@@ -128,7 +128,7 @@ class MenuAdmin(Frame):
         botonEliminar = Button(inventarioFrame, text="Eliminar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.eliminarProducto)
         botonEliminar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
-        botonMostrar = Button(inventarioFrame, text="Ver Inventario", bg="#E0E1DD", font=("Arial", 15), command=self.mostrarInventarioCompleto)
+        botonMostrar = Button(inventarioFrame, text="Ver Inventario", bg="#E0E1DD", font=("Arial", 15), command=self.mostrarInventario)
         botonMostrar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
         # Botón para volver al menú principal
@@ -288,14 +288,24 @@ class MenuAdmin(Frame):
             messagebox.showerror("Error", "Producto no encontrado.")
         ventana.destroy()
 
-    def mostrarInventarioCompleto(self):
-        # Mostrar el inventario completo usando la clase InventarioDoubleList
-        inventario = self.inventario.mostrar_completo()
-        if inventario is None:
-            print("El inventario está vació")
-            return
-        for producto in inventario:
-            self.listbox.insert(END, producto.getNombre())
+    def mostrarInventario(self):
+        # Elimina el frame de funcionalidades actual
+        self.FrameFuncionalidades.pack_forget()
+
+        # Crear un nuevo frame para el menú de inventario
+        inventarioFrame = Frame(self, bg="#1B263B")
+        inventarioFrame.pack(fill="both", expand=True)
+
+        # Título
+        tituloLabel = Label(inventarioFrame, text="Inventario", font=("Arial", 25, "bold"), bg="#1B263B", fg="white")
+        tituloLabel.pack(pady=10)
+
+        # Opciones del inventario
+        botonFiltrar = Button(inventarioFrame, text="Filtrar Inventario", bg="#E0E1DD", font=("Arial", 15), command=self.agregarProducto)
+        botonFiltrar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
+
+        botonCompleto = Button(inventarioFrame, text="Ver Inventario Completo", bg="#E0E1DD", font=("Arial", 15), command=self.buscarProducto)
+        botonCompleto.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
     def volverMenu(self, frameActual):
         # Destruir el frame actual
