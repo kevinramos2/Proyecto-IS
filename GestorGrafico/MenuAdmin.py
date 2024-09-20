@@ -1,5 +1,9 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import messagebox
+from GestorAplicacion.DoubleList import DoubleList
+from GestorAplicacion.InventarioDoubleList import InventarioDoubleList
+from GestorAplicacion.Producto import Producto  # Asegúrate de que esta clase esté correctamente importada
 
 class MenuAdmin(Frame):
     def __init__(self, ventana, empleado):
@@ -8,6 +12,7 @@ class MenuAdmin(Frame):
         self.pack(fill="both",expand=True)
         self.empleado = empleado
         self.ventana = ventana
+        self.inventario = InventarioDoubleList()  # Instancia del inventario
 
         # Frame para el Mensaje de Bienvenida
         LabelFrame = Frame(self, height=100, bg="#1B263B", padx=5, pady=5)
@@ -41,7 +46,7 @@ class MenuAdmin(Frame):
 
         # Definimos funciones para cada botón
         def abrirInventario():
-            self.mostrarNuevoFrame("Inventario", ["Producto 1", "Producto 2", "Producto 3"])
+            self.mostrarMenuInventario()
 
         def verReporteVentas():
             self.mostrarNuevoFrame("Reporte de Ventas", ["Total Ventas: 5000", "Ventas de Hoy: 300"])
@@ -101,26 +106,125 @@ class MenuAdmin(Frame):
         
         botonRevisar.pack(fill="x", side="top",expand=True, padx=5)
 
-    def mostrarNuevoFrame(self, titulo, contenido):
+    def mostrarMenuInventario(self):
         # Elimina el frame de funcionalidades actual
         self.FrameFuncionalidades.pack_forget()
 
-        # Crear un nuevo frame para la funcionalidad seleccionada
-        nuevoFrame = Frame(self, bg="#1B263B")
-        nuevoFrame.pack(fill="both", expand=True)
+        # Crear un nuevo frame para el menú de inventario
+        inventarioFrame = Frame(self, bg="#1B263B")
+        inventarioFrame.pack(fill="both", expand=True)
 
-        # Mostrar el título de la funcionalidad
-        tituloLabel = Label(nuevoFrame, text=titulo, font=("Arial", 25, "bold"), bg="#1B263B", fg="white")
+        # Título
+        tituloLabel = Label(inventarioFrame, text="Inventario", font=("Arial", 25, "bold"), bg="#1B263B", fg="white")
         tituloLabel.pack(pady=10)
 
-        # Añadir el contenido de la funcionalidad
-        for item in contenido:
-            contenidoLabel = Label(nuevoFrame, text=item, font=("Arial", 15), bg="#1B263B", fg="white")
-            contenidoLabel.pack(pady=5)
+        # Opciones del inventario
+        botonAgregar = Button(inventarioFrame, text="Agregar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.agregarProducto)
+        botonAgregar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
 
-        # Añadir botón para volver al menú principal
-        botonVolver = Button(nuevoFrame, text="Volver", bg="#E0E1DD", font=("Arial", 15), command=lambda: self.volverMenu(nuevoFrame))
+        botonBuscar = Button(inventarioFrame, text="Buscar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.buscarProducto)
+        botonBuscar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
+
+        botonEliminar = Button(inventarioFrame, text="Eliminar Producto", bg="#E0E1DD", font=("Arial", 15), command=self.eliminarProducto)
+        botonEliminar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
+
+        botonMostrar = Button(inventarioFrame, text="Mostrar Inventario Completo", bg="#E0E1DD", font=("Arial", 15), command=self.mostrarInventarioCompleto)
+        botonMostrar.pack(fill="x", side="top", expand=True, padx=5, pady=5)
+
+        # Botón para volver al menú principal
+        botonVolver = Button(inventarioFrame, text="Volver", bg="#E0E1DD", font=("Arial", 15), command=lambda: self.volverMenu(inventarioFrame))
         botonVolver.pack(pady=10)
+
+    def agregarProducto(self):
+        # Crear ventana emergente para ingresar los datos del producto
+        agregarWin = Toplevel(self)
+        agregarWin.title("Agregar Producto")
+        
+        # Etiquetas y campos de entrada
+        Label(agregarWin, text="Nombre:").grid(row=0, column=0)
+        nombre = Entry(agregarWin)
+        nombre.grid(row=0, column=1)
+
+        Label(agregarWin, text="Referencia:").grid(row=1, column=0)
+        referencia = Entry(agregarWin)
+        referencia.grid(row=1, column=1)
+
+        Label(agregarWin, text="Stock:").grid(row=2, column=0)
+        stock = Entry(agregarWin)
+        stock.grid(row=2, column=1)
+
+        Label(agregarWin, text="Categoría:").grid(row=3, column=0)
+        categoria = Entry(agregarWin)
+        categoria.grid(row=3, column=1)
+
+        Label(agregarWin, text="Precio:").grid(row=4, column=0)
+        precio = Entry(agregarWin)
+        precio.grid(row=4, column=1)
+
+        Label(agregarWin, text="Color (si aplica):").grid(row=5, column=0)
+        color = Entry(agregarWin)
+        color.grid(row=5, column=1)
+
+        Label(agregarWin, text="Aroma (si aplica):").grid(row=6, column=0)
+        aroma = Entry(agregarWin)
+        aroma.grid(row=6, column=1)
+
+        # Botón para agregar
+        Button(agregarWin, text="Agregar", command=lambda: self.guardarProducto(agregarWin, nombre.get(), referencia.get(), stock.get(), categoria.get(), precio.get(), color.get(), aroma.get())).grid(row=7, column=0, columnspan=2)
+
+    def guardarProducto(self, ventana, nombre, referencia, stock, categoria, precio, color, aroma):
+        # Crear y agregar el producto al inventario
+        try:
+            producto = Producto(nombre, referencia, int(stock), categoria, float(precio), color, aroma)
+            messagebox.showinfo("Éxito", f"Producto '{nombre}' agregado exitosamente.")
+            ventana.destroy()  # Cierra la ventana después de agregar el producto
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al agregar el producto: {e}")
+
+    def buscarProducto(self):
+        buscarWin = Toplevel(self)
+        buscarWin.title("Buscar Producto")
+        
+        Label(buscarWin, text="Referencia del Producto:").grid(row=0, column=0)
+        referencia = Entry(buscarWin)
+        referencia.grid(row=0, column=1)
+
+        Button(buscarWin, text="Buscar", command=lambda: self.mostrarProducto(buscarWin, referencia.get())).grid(row=1, column=0, columnspan=2)
+
+    def mostrarProducto(self, ventana, referencia):
+        producto = self.inventario.buscar(referencia)
+        if producto:
+            messagebox.showinfo("Producto Encontrado", str(producto))
+        else:
+            messagebox.showerror("Error", "Producto no encontrado.")
+        ventana.destroy()
+
+    def eliminarProducto(self):
+        eliminarWin = Toplevel(self)
+        eliminarWin.title("Eliminar Producto")
+        
+        Label(eliminarWin, text="Referencia del Producto:").grid(row=0, column=0)
+        referencia = Entry(eliminarWin)
+        referencia.grid(row=0, column=1)
+
+        Button(eliminarWin, text="Eliminar", command=lambda: self.eliminarProductoInventario(eliminarWin, referencia.get())).grid(row=1, column=0, columnspan=2)
+
+    def eliminarProductoInventario(self, ventana, referencia):
+        producto = self.inventario.buscar(referencia)
+        if producto:
+            self.inventario.eliminar(producto)
+            messagebox.showinfo("Éxito", f"Producto '{producto.get_nombre()}' eliminado exitosamente.")
+        else:
+            messagebox.showerror("Error", "Producto no encontrado.")
+        ventana.destroy()
+
+    def mostrarInventarioCompleto(self):
+        # Mostrar el inventario completo usando la clase InventarioDoubleList
+        productos = self.inventario.mostrar_completo()
+        if productos:
+            messagebox.showinfo("Inventario Completo", "\n".join(str(p) for p in productos))
+        else:
+            messagebox.showinfo("Inventario", "El inventario está vacío.")
 
     def volverMenu(self, frameActual):
         # Destruir el frame actual
@@ -128,3 +232,4 @@ class MenuAdmin(Frame):
 
         # Volver a mostrar el frame de funcionalidades
         self.FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
+
