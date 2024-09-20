@@ -49,13 +49,13 @@ class MenuAdmin(Frame):
             self.mostrarMenuInventario()
 
         def verReporteVentas():
-            self.mostrarNuevoFrame("Reporte de Ventas", ["Total Ventas: 5000", "Ventas de Hoy: 300"])
+            self.mostrarMenuReporteVentas()
 
         def enviarMensaje():
-            self.mostrarNuevoFrame("Enviar Mensaje", ["Escribe tu mensaje aquí:"])
+            self.mostrarMenuEnviarMensaje()
 
         def revisarMensaje():
-            self.mostrarNuevoFrame("Revisar Mensaje", ["Mensaje 1: Hola", "Mensaje 2: Buenas"])
+            self.mostrarMenuRevisarMensaje()
 
         # Botones de funcionalidades
         botonInventario = Button(
@@ -135,6 +135,75 @@ class MenuAdmin(Frame):
         botonVolver = Button(inventarioFrame, text="Volver", bg="#E0E1DD", font=("Arial", 15), command=lambda: self.volverMenu(inventarioFrame))
         botonVolver.pack(pady=10)
 
+    def mostrarMenuReporteVentas(self):
+        # Elimina el frame de funcionalidades actual
+        self.FrameFuncionalidades.pack_forget()
+
+        # Crear un nuevo frame para el menú de reporte de ventas
+        reporteFrame = Frame(self, bg="#1B263B")
+        reporteFrame.pack(fill="both", expand=True)
+
+        # Título
+        tituloLabel = Label(reporteFrame, text="Reporte de Ventas", font=("Arial", 25, "bold"), bg="#1B263B", fg="white")
+        tituloLabel.pack(pady=10)
+
+        # Información de ventas
+        ventasLabel = Label(reporteFrame, text="Total Ventas: 5000\nVentas de Hoy: 300", font=("Arial", 15), bg="#E0E1DD")
+        ventasLabel.pack(pady=5)
+
+        # Botón para volver al menú principal
+        botonVolver = Button(reporteFrame, text="Volver", bg="#E0E1DD", font=("Arial", 15), command=lambda: self.volverMenu(reporteFrame))
+        botonVolver.pack(pady=10)
+
+    def mostrarMenuEnviarMensaje(self):
+        # Elimina el frame de funcionalidades actual
+        self.FrameFuncionalidades.pack_forget()
+
+        # Crear un nuevo frame para el menú de enviar mensaje
+        enviarFrame = Frame(self, bg="#1B263B")
+        enviarFrame.pack(fill="both", expand=True)
+
+        # Título
+        tituloLabel = Label(enviarFrame, text="Enviar Mensaje", font=("Arial", 25, "bold"), bg="#1B263B", fg="white")
+        tituloLabel.pack(pady=10)
+
+        # Área para escribir el mensaje
+        mensajeLabel = Label(enviarFrame, text="Escribe tu mensaje aquí:", font=("Arial", 15), bg="#E0E1DD")
+        mensajeLabel.pack(pady=5)
+
+        mensajeEntry = Entry(enviarFrame, width=40)
+        mensajeEntry.pack(pady=5)
+
+        # Botón para volver al menú principal
+        botonVolver = Button(enviarFrame, text="Volver", bg="#E0E1DD", font=("Arial", 15), command=lambda: self.volverMenu(enviarFrame))
+        botonVolver.pack(pady=10)
+
+    def mostrarMenuRevisarMensaje(self):
+        # Elimina el frame de funcionalidades actual
+        self.FrameFuncionalidades.pack_forget()
+
+        # Crear un nuevo frame para el menú de revisar mensaje
+        revisarFrame = Frame(self, bg="#1B263B")
+        revisarFrame.pack(fill="both", expand=True)
+
+        # Título
+        tituloLabel = Label(revisarFrame, text="Revisar Mensaje", font=("Arial", 25, "bold"), bg="#1B263B", fg="white")
+        tituloLabel.pack(pady=10)
+
+        # Mensajes previos
+        mensajesLabel = Label(revisarFrame, text="Mensajes previos: \n1. Hola\n2. ¿Cómo estás?", font=("Arial", 15), bg="#E0E1DD")
+        mensajesLabel.pack(pady=5)
+
+        # Botón para volver al menú principal
+        botonVolver = Button(revisarFrame, text="Volver", bg="#E0E1DD", font=("Arial", 15), command=lambda: self.volverMenu(revisarFrame))
+        botonVolver.pack(pady=10)
+
+    def volverMenu(self, frameAnterior):
+        # Elimina el frame actual (frameAnterior) y vuelve a mostrar las funcionalidades principales
+        frameAnterior.pack_forget()
+        self.FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
+    
+    # Métodos para inventario
     def agregarProducto(self):
         # Crear ventana emergente para ingresar los datos del producto
         agregarWin = Toplevel(self)
@@ -232,4 +301,3 @@ class MenuAdmin(Frame):
 
         # Volver a mostrar el frame de funcionalidades
         self.FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
-
