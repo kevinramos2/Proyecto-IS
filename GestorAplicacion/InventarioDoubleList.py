@@ -17,6 +17,7 @@ class InventarioDoubleList:
         while temp is not None:
             if temp.get_data().get_referencia() == referencia:
                 encontrado = temp.get_data()
+                break  # Detener la búsqueda una vez encontrado
             temp = temp.get_next()
         return encontrado
 
@@ -48,8 +49,9 @@ class InventarioDoubleList:
             temp = temp.get_next()
     
     def actualizar_existencias(self, producto, cantidad_comprada):
-        producto = self.buscar_producto(producto.referencia)
-        if producto is not None:
-            producto.set_stock(producto.get_stock() - cantidad_comprada)
+        referencia = producto.referencia  # Guardar referencia antes de buscar
+        producto_en_inventario = self.buscar_producto(referencia)
+        if producto_en_inventario is not None:
+            producto_en_inventario.set_stock(producto_en_inventario.get_stock() - cantidad_comprada)
         else:
-            print(f"Producto con referencia {producto.referencia} no encontrado.")
+            print(f"Producto con referencia {referencia} no encontrado.")
