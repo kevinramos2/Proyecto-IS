@@ -4,6 +4,7 @@ from tkinter import messagebox
 from datetime import datetime
 from GestorAplicacion.Producto import Producto
 from GestorAplicacion.Venta import Venta
+# Removed playsound import since it's not needed
 
 class MenuDespachadora(Frame):
     def __init__(self, ventana, empleado):
@@ -27,12 +28,6 @@ class MenuDespachadora(Frame):
         )
         mensaje_bienv.pack(side="left")
 
-        # Función para cerrar sesión
-        def cerrarSesion():
-            from GestorGrafico.LogInGrafico import LogInGrafico
-            self.destroy()
-            LogInGrafico(self.ventana)
-
         # Función para abrir caja
         def abrirCaja():
             # Destruir la ventana principal
@@ -43,7 +38,7 @@ class MenuDespachadora(Frame):
             caja_ventana.title("Caja")
             caja_ventana.geometry("400x300")
             caja_ventana.config(bg="#F0F0F0")
-            caja_ventana.protocol("WM_DELETE_WINDOW", lambda: None)  # Deshabilitar el botón de cerrar venta Caja Abierta solo Cerrar caja papá
+            caja_ventana.protocol("WM_DELETE_WINDOW", lambda: None)  # Deshabilitar el botón de cerrar de la ventana
 
             # Etiqueta indicativa
             etiqueta = Label(caja_ventana, text="Caja Abierta", font=("arial", 16), bg="#F0F0F0")
@@ -58,37 +53,26 @@ class MenuDespachadora(Frame):
                 botones_frame,
                 text="Registrar Venta",
                 font=("arial", 12),
-                bg="#3498DB",
-                fg="white",
+                bg="#F0F0F0",
+                fg="black",
                 width=20,
                 command=self.abrir_registrar_venta  # Actualizado
             )
             boton_registrar_venta.pack(pady=5)
 
-            # Botón Enviar Mensaje
-            boton_enviar_mensaje = Button(
-                botones_frame,
-                text="Enviar Mensaje",
-                font=("arial", 12),
-                bg="#2ECC71",
-                fg="white",
-                width=20,
-                command=lambda: None  # Futura funcionalidad
-            )
-            boton_enviar_mensaje.pack(pady=5)
-
             # Botón Cerrar Caja
             def cerrarCaja():
                 caja_ventana.destroy()
-                # Recrear la ventana principal
-                new_frame = MenuDespachadora(self.ventana, self.empleado)
+                # Volver a la pantalla de login
+                from GestorGrafico.LogInGrafico import LogInGrafico
+                LogInGrafico(self.ventana)
 
             boton_cerrar_caja = Button(
                 botones_frame,
                 text="Cerrar Caja",
                 font=("arial", 12),
-                bg="#E74C3C",
-                fg="white",
+                bg="#F0F0F0",
+                fg="black",
                 width=20,
                 command=cerrarCaja
             )
@@ -114,17 +98,8 @@ class MenuDespachadora(Frame):
         )
         boton_abrir_caja.pack(pady=10)
 
-        # Botón Cerrar Sesión
-        boton_cerrar_sesion = Button(
-            botones_container,
-            text="Cerrar Sesión",
-            font=("arial", 14),
-            bg="#E74C3C",
-            fg="white",
-            width=15,
-            command=cerrarSesion
-        )
-        boton_cerrar_sesion.pack(pady=10)
+        # Eliminado el Botón "Cerrar Sesión"
+        # Ya no se crea ni se empaca el botón "Cerrar Sesión"
 
     # Función para abrir la ventana de registrar venta
     def abrir_registrar_venta(self):
@@ -201,7 +176,7 @@ class MenuDespachadora(Frame):
         pago_label.grid(row=0, column=0, padx=5, pady=5, sticky="e")
 
         self.metodo_pago_var = StringVar()
-        self.metodo_pago_var.set("Transferencia")  #Por Defecto la transferencia
+        self.metodo_pago_var.set("Transferencia")  # Por Defecto la transferencia
 
         metodo_pago_menu = OptionMenu(pago_frame, self.metodo_pago_var, *opciones_pago.values())
         metodo_pago_menu.grid(row=0, column=1, padx=5, pady=5, sticky="w")

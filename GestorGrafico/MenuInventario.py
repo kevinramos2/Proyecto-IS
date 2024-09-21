@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import messagebox
 from GestorAplicacion.Producto import Producto
 
 class MenuInventario(Frame):
@@ -243,8 +244,7 @@ class MenuInventario(Frame):
                     precio = float(entry_precio.get())
                 except ValueError:
                     # Mostrar mensaje de error si no se ingresan números válidos en stock y precio
-                    error_label = Label(ventana_agregar, text="Error: Ingrese valores numéricos válidos en 'Stock' y 'Precio'", fg="red")
-                    error_label.pack(pady=5)
+                    messagebox.showerror("Error", "Ingrese valores numéricos válidos en 'Stock' y 'Precio'.")
                     return
 
                 categoria = categoria_seleccionada.get()
@@ -259,16 +259,134 @@ class MenuInventario(Frame):
                 # Cerrar ventana después de agregar
                 ventana_agregar.destroy()
 
-                # Mostrar mensaje de éxito
-                success_label = Label(self, text=f"Producto '{nombre}' agregado con éxito.", fg="green")
-                success_label.pack(pady=5)
+                # Mostrar mensaje de confirmación en una ventana emergente
+                messagebox.showinfo("Éxito", f"Producto '{nombre}' agregado con éxito.")
 
             # Botón para guardar el producto
             btn_guardar = Button(ventana_agregar, text="Guardar Producto", command=guardarProducto)
             btn_guardar.pack(pady=10)
         
         def actualizarStock():
-            print("Esto funciona?")
+            # Crear una nueva ventana para actualizar inventario
+            ventana_actualizar = Toplevel(self.ventana)
+            ventana_actualizar.title("Actualizar Inventario")
+            ventana_actualizar.geometry("400x400")
+
+            # Título
+            titulo = Label(ventana_actualizar, text="Actualizar Inventario", font=("Arial", 16, "bold"))
+            titulo.pack(pady=10)
+
+            # Campo de búsqueda
+            lbl_buscar = Label(ventana_actualizar, text="Buscar Producto (por Nombre o Referencia):")
+            lbl_buscar.pack(pady=5)
+            entry_buscar = Entry(ventana_actualizar)
+            entry_buscar.pack(pady=5)
+
+            # Frame para mostrar los mensajes
+            frame_mensajes = Frame(ventana_actualizar)
+            frame_mensajes.pack(pady=5)
+
+            # Frame para mostrar los detalles del producto y las opciones
+            frame_resultados = Frame(ventana_actualizar)
+            frame_resultados.pack(pady=5)
+
+            # Función para buscar el producto
+            def buscarProducto():
+                # Limpiar mensajes y resultados previos
+                for widget in frame_mensajes.winfo_children():
+                    widget.destroy()
+                for widget in frame_resultados.winfo_children():
+                    widget.destroy()
+
+                busqueda = entry_buscar.get()
+                producto_encontrado = Producto.inventario.buscar_producto(busqueda)  # Suponiendo que tienes esta función
+
+                if producto_encontrado:
+                    # Mostrar los detalles del producto
+                    detalles = f"Producto: {producto_encontrado.nombre} - Stock: {producto_encontrado.stock}"
+                    lbl_detalles = Label(frame_resultados, text=detalles, font=("Arial", 12))
+                    lbl_detalles.pack(pady=5)
+
+                    # Frame para las opciones de eliminar o modificar stock
+                    frame_opciones = Frame(frame_resultados)
+                    frame_opciones.pack(pady=5)
+
+                    # Botón para eliminar producto
+                    btn_eliminar = Button(frame_opciones, text="Eliminar Producto", bg="red", fg="white", command=lambda: eliminarProducto(producto_encontrado))
+                    btn_eliminar.grid(row=0, column=0, padx=10)
+
+                    # Botón para modificar stock
+                    btn_modificar = Button(frame_opciones, text="Modificar Stock", command=lambda: mostrarModificarStock(producto_encontrado))
+                    btn_modificar.grid(row=0, column=1, padx=10)
+
+                else:
+                    # Mensaje de error si no se encuentra el producto
+                    mensaje_error = Label(frame_mensajes, text="Producto no encontrado.", fg="red")
+                    mensaje_error.pack()
+
+            # Función para eliminar producto
+            def eliminarProducto(producto):
+                # Limpiar mensajes previos
+                for widget in frame_mensajes.winfo_children():
+                    widget.destroy()
+
+                Producto.inventario.eliminar_producto(producto.referencia)  # Suponiendo que tienes esta función
+
+                mensaje_exito = Label(frame_mensajes, text=f"Producto '{producto.nombre}' eliminado.", fg="green")
+                mensaje_exito.pack()
+
+                # Limpiar los resultados ya que el producto fue eliminado
+                for widget in frame_resultados.winfo_children():
+                    widget.destroy()
+
+            # Función para mostrar la opción de modificar el stock
+            def mostrarModificarStock(producto):
+                # Limpiar mensajes previos
+                for widget in frame_mensajes.winfo_children():
+                    widget.destroy()
+
+                # Limpiar el frame de resultados para solo mostrar la opción de modificar stock
+                for widget in frame_resultados.winfo_children():
+                    widget.destroy()
+
+                # Frame para modificar stock
+                frame_modificar_stock = Frame(frame_resultados)
+                frame_modificar_stock.pack(pady=10)
+
+                lbl_nuevo_stock = Label(frame_modificar_stock, text="Nuevo Stock:")
+                lbl_nuevo_stock.pack(side="left", padx=5)
+                entry_nuevo_stock = Entry(frame_modificar_stock)
+                entry_nuevo_stock.pack(side="left", padx=5)
+
+                def modificarStock():
+                    # Limpiar mensajes previos
+                    for widget in frame_mensajes.winfo_children():
+                        widget.destroy()
+
+                    try:
+                        nuevo_stock = int(entry_nuevo_stock.get())
+                        producto.stock = nuevo_stock
+                        mensaje_exito = Label(frame_mensajes, text=f"Stock del producto '{producto.nombre}' actualizado a {nuevo_stock}.", fg="green")
+                        mensaje_exito.pack()
+
+                        # Limpiar los resultados ya que el stock fue actualizado
+                        for widget in frame_resultados.winfo_children():
+                            widget.destroy()
+                    except ValueError:
+                        mensaje_error = Label(frame_mensajes, text="Error: El stock debe ser un número.", fg="red")
+                        mensaje_error.pack()
+
+                # Botón para aplicar el nuevo stock
+                btn_aplicar_stock = Button(frame_modificar_stock, text="Aplicar", command=modificarStock)
+                btn_aplicar_stock.pack(side="left", padx=5)
+
+            # Botón para buscar producto
+            btn_buscar = Button(ventana_actualizar, text="Buscar", command=buscarProducto)
+            btn_buscar.pack(pady=10)
+
+            # Botón para cancelar operación
+            btn_cancelar = Button(ventana_actualizar, text="Cancelar", bg="gray", command=ventana_actualizar.destroy)
+            btn_cancelar.pack(pady=10)
 
         # Boton para volver al menu principal
         ImagenHome = "BaseDeDatos\Imagenes\home-solid-36.png"
@@ -321,7 +439,6 @@ class MenuInventario(Frame):
             command= agregarProducto)
         
         botonAgregarProducto.pack(fill="x", side="top",expand=True, padx= 5)
-
 
 
         #En actualizar inventario estara:
