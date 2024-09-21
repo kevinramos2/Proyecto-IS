@@ -321,7 +321,6 @@ class MenuDespachadora(Frame):
             # Actualizar existencias
             for producto, cantidad in productos:
                 Producto.inventario.actualizar_existencias(producto, cantidad)
-            Venta._todas_las_ventas.append(venta)
             messagebox.showinfo("Éxito", "Venta confirmada exitosamente.")
             # Cerrar la ventana de registro de venta
             self.registrar_venta_ventana.destroy()

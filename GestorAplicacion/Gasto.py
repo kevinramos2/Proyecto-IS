@@ -16,7 +16,7 @@ class Gasto:
     @classmethod
     def getGastosDia(cls):
         fecha_actual = datetime.now().strftime('%Y-%m-%d')
-        gastos_del_dia = [gasto for gasto in Gasto._todos_los_gastos if gasto.fecha.strftime('%Y-%m-%d') == fecha_actual]
+        gastos_del_dia = [gasto for gasto in Gasto._todos_los_gastos if gasto.fecha == fecha_actual]
         return gastos_del_dia
 
 

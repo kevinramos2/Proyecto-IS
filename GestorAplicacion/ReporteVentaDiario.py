@@ -15,15 +15,13 @@ class ReporteDeVentas:
         return bool(self.ventas_del_dia)
     
     def anadir_ventas(self):
-        
         if self.HayVentas():
             for venta in self.ventas_del_dia:
-                venta = ""
-                venta+= f"ID Venta: {venta.id_venta} | Cliente: {venta.id_cliente} | Total: ${venta.total:.2f} | Estado: {venta.estado} \n"
+                venta_info = f"ID Venta: {venta.id_venta} | Cliente: {venta.id_cliente} | Total: ${venta.total:.2f} | Estado: {venta.estado}\n"
                 for producto, cantidad in venta.productos:
-                    venta += f"    - Producto: {producto.nombre} | Cantidad: {cantidad} | Precio Unitario: ${producto.get_precio():.2f} COP\n"
-
-                self.productos_listbox.insert("1.0", venta)
+                    venta_info += f"    - Producto: {producto.nombre} | Cantidad: {cantidad} | Precio Unitario: ${producto.get_precio():.2f} COP\n"
+                    
+                self.productos_listbox.insert(tk.END, venta_info)
 
     def generar_Reporte_diario_tkinter(self, ventana):
         # Sección para el informe del reporte
@@ -38,7 +36,7 @@ class ReporteDeVentas:
         total_ventas_label = Label(informe_frame, text="Total de ventas en el dia:", bg="#F0F0F0",font=("arial",12,"italic"))
         total_ventas_label.grid(row=0, column=0, padx=5, pady=(5, 2), sticky="e")
 
-        total_dia = sum(self.ventas_del_dia)
+        total_dia = sum(venta.total for venta in self.ventas_del_dia)
 
         self.total_de_venta_label = Label(informe_frame, text=total_dia,font=("arial",12,"bold"),bg="#F0F0F0")
         self.total_de_venta_label.grid(row=0, column=1, padx=5, pady=(5, 2), sticky="w")
@@ -61,9 +59,17 @@ class ReporteDeVentas:
         scrollbar.grid(row=3, column=2, sticky='ns')
         self.productos_listbox.config(yscrollcommand=scrollbar.set)
 
+        scrollbar1 = Scrollbar(informe_frame, orient=HORIZONTAL, command=self.productos_listbox.xview)
+        scrollbar1.grid(row=4, column=0, sticky='ew',columnspan=2)
+        self.productos_listbox.config(xscrollcommand=scrollbar1.set)
+
         self.anadir_ventas()
 
         # Label para Arqueo:
+        gastos_del_dia = sum(gasto.valor for gasto in Gasto.getGastosDia())
+        Arqueo_text = f"Ganancias o Perdidas: {total_dia - gastos_del_dia}"
+        Arqueo_label = Label(informe_frame, text=Arqueo_text, fg="red")
+        Arqueo_label.grid(row=5, column=0, columnspan=2, pady= 5)
 
         
 
