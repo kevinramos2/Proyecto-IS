@@ -44,11 +44,13 @@ class InventarioDoubleList:
         return productos  # Retornar la lista de productos
 
     def mostrar_por_categoria(self, categoria):
+        productos_filtrados = []
         temp = self.inventario.first()
         while temp is not None:
             if temp.get_data().get_categoria() == categoria:
-                print(temp.get_data().__str__())
+                productos_filtrados.append(temp.get_data().__str__())
             temp = temp.get_next()
+        return productos_filtrados #se lleva el inventario filtrado
     
     def actualizar_existencias(self, producto, cantidad_comprada):
         referencia = producto.referencia  # Guardar referencia antes de buscar

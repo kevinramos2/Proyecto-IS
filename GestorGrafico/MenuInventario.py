@@ -95,7 +95,96 @@ class MenuInventario(Frame):
 
 
         def filtrarInventario():
-            print("si funciona el de arriba este puede que también jasjasja")
+             # Crear una nueva ventana para seleccionar la categoría
+            ventana_filtro = Toplevel(self.ventana)
+            ventana_filtro.title("Filtrar Inventario por Categoría")
+            ventana_filtro.geometry("300x200")
+
+            # Crear un título para la ventana
+            titulo = Label(ventana_filtro, text="Seleccione una Categoría", font=("Arial", 14, "bold"))
+            titulo.pack(pady=10)
+
+            # Crear una lista de categorías
+            categorias = ["Velon", "Vela Lisa", "Vela Lisa Baby", "Esencia"]
+
+            # Variable para guardar la selección
+            categoria_seleccionada = StringVar(ventana_filtro)
+            categoria_seleccionada.set(categorias[0])  # Valor por defecto
+
+            # Crear un menú desplegable para seleccionar la categoría
+            menu_categorias = OptionMenu(ventana_filtro, categoria_seleccionada, *categorias)
+            menu_categorias.pack(pady=10)
+
+            # Función que se ejecuta al hacer clic en el botón "Filtrar"
+            def mostrar_filtrado():
+                # Obtener la categoría seleccionada
+                categoria = categoria_seleccionada.get()
+
+                # Crear una nueva ventana para mostrar el inventario filtrado
+                ventana_inventario_filtrado = Toplevel(self.ventana)
+                ventana_inventario_filtrado.title(f"Inventario Filtrado - {categoria}")
+                ventana_inventario_filtrado.geometry("900x400")
+
+                # Añadir un título en la nueva ventana
+                titulo = Label(ventana_inventario_filtrado, text=f"Inventario - {categoria}", font=("Arial", 16, "bold"), bg="#1B263B", fg="white")
+                titulo.pack(fill="x")
+
+                # Frame para el contenido del inventario filtrado
+                frame_inventario = Frame(ventana_inventario_filtrado)
+                frame_inventario.pack(fill="both", expand=True, padx=10, pady=10)
+
+                # Crear una barra de desplazamiento vertical
+                scrollbar_y = Scrollbar(frame_inventario)
+                scrollbar_y.pack(side=RIGHT, fill=Y)
+
+                # Crear una barra de desplazamiento horizontal
+                scrollbar_x = Scrollbar(frame_inventario, orient="horizontal")
+                scrollbar_x.pack(side=BOTTOM, fill=X)
+
+                # Crear un widget de Text para mostrar el inventario con scroll horizontal y vertical
+                texto_inventario = Text(frame_inventario, wrap="none", yscrollcommand=scrollbar_y.set, xscrollcommand=scrollbar_x.set, font=("Courier", 12))
+                texto_inventario.pack(fill="both", expand=True)
+
+                # Configurar las barras de desplazamiento
+                scrollbar_y.config(command=texto_inventario.yview)
+                scrollbar_x.config(command=texto_inventario.xview)
+
+                # Obtener los productos filtrados por categoría
+                productos_filtrados = Producto.inventario.mostrar_por_categoria(categoria)
+
+                if productos_filtrados:  # Verificar que haya productos en la categoría seleccionada
+                    # Encabezados alineados con el espacio adecuado usando fuente monoespaciada
+                    headers = f"{'Producto':<25}{'Color/Aroma':<15}{'Referencia':<10}{'Precio':<10}{'Cantidad':<10}{'Categoría':<15}\n"
+                    texto_inventario.insert(END, headers)
+                    texto_inventario.insert(END, "-" * 90 + "\n")  # Separador visual
+
+                    for producto in productos_filtrados:
+                        # Separar los detalles
+                        detalles = producto.split(" - ")
+
+                        if len(detalles) >= 6:
+                            # Extraer los datos de cada campo sin las etiquetas redundantes
+                            producto_nombre = detalles[0].split(": ")[1] if ": " in detalles[0] else detalles[0]
+                            color_aroma = detalles[1].split(": ")[1] if ": " in detalles[1] else detalles[1]
+                            referencia = detalles[2].split(": ")[1] if ": " in detalles[2] else detalles[2]
+                            precio = detalles[3].split(": ")[1] if ": " in detalles[3] else detalles[3]
+                            cantidad = detalles[4].split(": ")[1] if ": " in detalles[4] else detalles[4]
+                            categoria = detalles[5].split(": ")[1] if ": " in detalles[5] else detalles[5]
+
+                            # Formatear la fila con columnas alineadas usando una fuente monoespaciada
+                            texto_formateado = f"{producto_nombre:<25}{color_aroma:<15}{referencia:<10}{precio:<10}{cantidad:<10}{categoria:<15}\n"
+                            texto_inventario.insert(END, texto_formateado)
+                        else:
+                            print(f"Error en el formato del producto: {producto}")  # Mostrar un error en consola para depuración
+                else:
+                    texto_inventario.insert(END, "No hay productos en esta categoría.")
+
+                # Hacer que el widget de texto sea solo de lectura
+                texto_inventario.config(state=DISABLED)
+
+            # Crear un botón para aplicar el filtro 
+            boton_filtrar = Button(ventana_filtro, text="Filtrar", command=mostrar_filtrado)
+            boton_filtrar.pack(pady=10)
 
         def agregarProducto():
             print("Esto funciona?")
