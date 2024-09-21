@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from GestorGrafico.MenuReporte import MenuReporte
 
 class MenuAdmin(Frame):
     def __init__(self, ventana, empleado):
@@ -13,7 +14,7 @@ class MenuAdmin(Frame):
         LabelFrame = Frame(self, height=100, bg="#1B263B", padx=5, pady=5)
         LabelFrame.pack(side="top", fill="x")
 
-        mensaje = f"Bienvenido de vuelta {self.empleado.getNombre()}"
+        mensaje = f"Bienvenido de vuelta {self.empleado.getNombre()} | Menu Principal"
         mensajeBienv = Label(LabelFrame, text=mensaje, font=("arial", 20, "italic underline"),bg="#1B263B" , fg = "white")
         mensajeBienv.pack(side="left")
 
@@ -52,6 +53,12 @@ class MenuAdmin(Frame):
         def revisarMensaje():
             self.mostrarNuevoFrame("Revisar Mensaje", ["Mensaje 1: Hola", "Mensaje 2: Buenas"])
 
+        # Funciones para las opciones
+        def AbrirMenuReporte():
+            self.destroy()
+            MenuReporte(self.ventana)
+
+
         # Botones de funcionalidades
         botonInventario = Button(
             self.FrameFuncionalidades, 
@@ -67,13 +74,13 @@ class MenuAdmin(Frame):
 
         botonReportes = Button(
             self.FrameFuncionalidades, 
-            text="Reporte de Ventas",
+            text="Reportes",
             bg="#E0E1DD",
             font=("Arial", 20, "bold"),
             width=10, 
             padx=2, 
             pady=2,
-            command=verReporteVentas)
+            command= AbrirMenuReporte)
         
         botonReportes.pack(fill="x", side="top",expand=True, padx=5)
 
