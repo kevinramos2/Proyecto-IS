@@ -3,7 +3,7 @@ from GestorAplicacion.Producto import Producto
 from GestorAplicacion.Venta import Venta
 
 class ReporteDeVentas:
-
+    _Ventas_por_dia = []
     def generar_reporte_diario():
         print("Reporte de ventas diario")
         print("------------------------")

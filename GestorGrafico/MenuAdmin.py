@@ -56,7 +56,7 @@ class MenuAdmin(Frame):
         # Funciones para las opciones
         def AbrirMenuReporte():
             self.destroy()
-            MenuReporte(self.ventana)
+            MenuReporte(self.ventana, self.empleado)
 
 
         # Botones de funcionalidades
