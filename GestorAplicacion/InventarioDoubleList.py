@@ -36,10 +36,12 @@ class InventarioDoubleList:
             print(temp.get_data())
 
     def mostrar_completo(self):
+        productos = []  # Crear una lista para almacenar los productos
         temp = self.inventario.first()
         while temp is not None:
-            print(temp.get_data().__str__())
+            productos.append(temp.get_data().__str__())  # Agregar cada producto como cadena a la lista
             temp = temp.get_next()
+        return productos  # Retornar la lista de productos
 
     def mostrar_por_categoria(self, categoria):
         temp = self.inventario.first()
