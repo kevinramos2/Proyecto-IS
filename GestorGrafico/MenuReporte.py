@@ -4,6 +4,7 @@ from datetime import datetime
 from GestorAplicacion.ReporteVentaDiario import ReporteDeVentas
 from GestorAplicacion.Gasto import Gasto
 
+
 class MenuReporte(Frame):
     def __init__(self, ventana, empleado):
         super().__init__(ventana)
@@ -34,7 +35,7 @@ class MenuReporte(Frame):
         MenuPrincipalBoton.image = foto
         MenuPrincipalBoton.pack(side="right")
 
-        # Frame que va a contener todas las funcionalidades del Administrador
+        # Frame que va a contener todas las funcionalidades del menu reporte
         FrameFuncionalidades = Frame(self, height= 400, width= 500, bg="#415A77")
         FrameFuncionalidades.pack_propagate(False)
         FrameFuncionalidades.pack(fill="y", expand=True, pady=5, padx=5)
@@ -108,14 +109,3 @@ class MenuReporte(Frame):
         
         botonReporteGasto.pack(fill="x", side="top",expand=True, padx= 5)
 
-        # Botones de funcionalidades
-        botonArqueo = Button(
-            FrameFuncionalidades, 
-            text="Arqueo",
-            bg="#E0E1DD",
-            font=("Arial", 20, "bold"),
-            width=10, 
-            padx=2, 
-            pady=2)
-        
-        botonArqueo.pack(fill="x", side="top",expand=True, padx= 5)

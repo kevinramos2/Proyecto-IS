@@ -1,6 +1,7 @@
 from datetime import datetime
 from GestorAplicacion.Producto import Producto
 from GestorAplicacion.Venta import Venta
+from GestorAplicacion.Gasto import Gasto
 import tkinter as tk
 from tkinter import *
 
@@ -21,7 +22,8 @@ class ReporteDeVentas:
                 venta+= f"ID Venta: {venta.id_venta} | Cliente: {venta.id_cliente} | Total: ${venta.total:.2f} | Estado: {venta.estado} \n"
                 for producto, cantidad in venta.productos:
                     venta += f"    - Producto: {producto.nombre} | Cantidad: {cantidad} | Precio Unitario: ${producto.get_precio():.2f} COP\n"
-                self.productos_listbox.insert(tk.END, venta)
+
+                self.productos_listbox.insert("1.0", venta)
 
     def generar_Reporte_diario_tkinter(self, ventana):
         # Sección para el informe del reporte
@@ -36,7 +38,7 @@ class ReporteDeVentas:
         total_ventas_label = Label(informe_frame, text="Total de ventas en el dia:", bg="#F0F0F0",font=("arial",12,"italic"))
         total_ventas_label.grid(row=0, column=0, padx=5, pady=(5, 2), sticky="e")
 
-        total_dia = sum(venta.total for venta in self.ventas_del_dia)
+        total_dia = sum(self.ventas_del_dia)
 
         self.total_de_venta_label = Label(informe_frame, text=total_dia,font=("arial",12,"bold"),bg="#F0F0F0")
         self.total_de_venta_label.grid(row=0, column=1, padx=5, pady=(5, 2), sticky="w")
@@ -60,6 +62,9 @@ class ReporteDeVentas:
         self.productos_listbox.config(yscrollcommand=scrollbar.set)
 
         self.anadir_ventas()
+
+        # Label para Arqueo:
+
         
 
     def generar_reporte_diario():

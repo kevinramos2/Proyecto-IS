@@ -12,6 +12,13 @@ class Gasto:
         self.fecha = fecha
         
         Gasto._todos_los_gastos.append(self)
+    
+    @classmethod
+    def getGastosDia(cls):
+        fecha_actual = datetime.now().strftime('%Y-%m-%d')
+        gastos_del_dia = [gasto for gasto in Gasto._todos_los_gastos if gasto.fecha.strftime('%Y-%m-%d') == fecha_actual]
+        return gastos_del_dia
+
 
     def registrar_gasto():
         print("Registro de nuevo gasto")

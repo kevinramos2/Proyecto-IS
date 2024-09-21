@@ -5,7 +5,8 @@ from GestorGrafico.MenuReporte import MenuReporte
 from tkinter import messagebox
 from GestorAplicacion.DoubleList import DoubleList
 from GestorAplicacion.InventarioDoubleList import InventarioDoubleList
-from GestorAplicacion.Producto import Producto  
+from GestorAplicacion.Producto import Producto 
+from BaseDeDatos.serializador import Serializador 
 
 class MenuAdmin(Frame):
     def __init__(self, ventana, empleado):
@@ -28,6 +29,11 @@ class MenuAdmin(Frame):
             from GestorGrafico.LogInGrafico import LogInGrafico
             self.destroy()
             LogInGrafico(self.ventana)
+        
+        def cerrarAplicacion():
+            Serializador.Serializar()
+            self.ventana.destroy()
+
 
         # Barra del Menu
         menuBar = Menu(self.ventana)
@@ -38,7 +44,7 @@ class MenuAdmin(Frame):
         menuSalir = Menu(menuBar)
         menuBar.add_cascade(label="Salir", menu=menuSalir, activebackground="#415A77")
 
-        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=self.ventana.destroy)
+        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=cerrarAplicacion)
         menuSalir.add_cascade(label="Cerrar Sesion", activebackground="#415A77",command=cerrarSesion)
 
 

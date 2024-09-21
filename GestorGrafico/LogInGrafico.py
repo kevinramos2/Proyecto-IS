@@ -9,6 +9,7 @@ from usuarios.Despachadora import Despachadora
 from tkinter import messagebox
 from GestorGrafico.MenuAdmin import MenuAdmin
 from GestorGrafico.MenuDespachadora import MenuDespachadora
+from BaseDeDatos.serializador import Serializador
 
 class PlaceHolderEntry(Entry):
     def __init__(self, parent, placeholder="", *args, **kwargs):
@@ -54,7 +55,11 @@ class LogInGrafico(Frame):
         menuSalir = Menu(menuBar)
         menuBar.add_cascade(label="Salir", menu=menuSalir, activebackground="#415A77")
 
-        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=self.ventana.destroy)
+        def cerrarAplicacion():
+            Serializador.Serializar()
+            self.ventana.destroy()
+
+        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=cerrarAplicacion)
 
 
         # Frame para el Mensaje de Bienvenida
