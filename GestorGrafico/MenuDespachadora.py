@@ -53,8 +53,8 @@ class MenuDespachadora(Frame):
                 botones_frame,
                 text="Registrar Venta",
                 font=("arial", 12),
-                bg="#3498DB",
-                fg="white",
+                bg="#F0F0F0",
+                fg="black",
                 width=20,
                 command=self.abrir_registrar_venta  # Actualizado
             )
@@ -71,8 +71,8 @@ class MenuDespachadora(Frame):
                 botones_frame,
                 text="Cerrar Caja",
                 font=("arial", 12),
-                bg="#E74C3C",
-                fg="white",
+                bg="#F0F0F0",
+                fg="black",
                 width=20,
                 command=cerrarCaja
             )
