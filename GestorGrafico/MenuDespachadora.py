@@ -60,18 +60,6 @@ class MenuDespachadora(Frame):
             )
             boton_registrar_venta.pack(pady=5)
 
-            # Botón Enviar Mensaje
-            boton_enviar_mensaje = Button(
-                botones_frame,
-                text="Enviar Mensaje",
-                font=("arial", 12),
-                bg="#2ECC71",
-                fg="white",
-                width=20,
-                command=lambda: None  # Futura funcionalidad
-            )
-            boton_enviar_mensaje.pack(pady=5)
-
             # Botón Cerrar Caja
             def cerrarCaja():
                 caja_ventana.destroy()
