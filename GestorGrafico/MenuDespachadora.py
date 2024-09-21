@@ -4,6 +4,10 @@ from tkinter import messagebox
 from datetime import datetime
 from GestorAplicacion.Producto import Producto
 from GestorAplicacion.Venta import Venta
+import os
+import subprocess
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 # Removed playsound import since it's not needed
 
 class MenuDespachadora(Frame):
@@ -222,6 +226,72 @@ class MenuDespachadora(Frame):
         self.id_producto_entry.delete(0, END)
         self.cantidad_entry.delete(0, END)
 
+    def generar_factura_pdf(self, nombre_archivo, datos_factura):
+        # Obtener la ruta del escritorio del usuario
+        escritorio = os.path.join(os.path.expanduser("~"), "Desktop")
+        
+        # Ruta de la carpeta 'facturas' en el escritorio
+        carpeta_facturas = os.path.join(escritorio, "facturas")
+        
+        # Crear la carpeta si no existe
+        if not os.path.exists(carpeta_facturas):
+            os.makedirs(carpeta_facturas)
+        
+        # Ruta completa donde se guardará el PDF
+        ruta_completa = os.path.join(carpeta_facturas, nombre_archivo)
+        
+        # Crear el documento PDF
+        c = canvas.Canvas(ruta_completa, pagesize=A4)
+
+        # Título de la factura
+        titulo = "Velas manare"
+        c.setFont("Helvetica-Bold", 24)
+        c.drawString(200, 780, titulo)
+
+        #  "despachador@_responsable": "self.empleado.getNombre()",
+        #         "ID Venta" : venta.id_venta,
+        #         "ID Cliente" : id_cliente,
+        #         "fecha" : venta.fecha.strftime('%Y-%m-%d %H:%M:%S'),
+        #         "Metodo de Pago" : metodo_pago,
+        #         "productos": venta.productos,
+        #         "Total" :  total_formateado
+
+        # Información del cliente y la factura
+        c.setFont("Helvetica", 12)
+        c.drawString(50, 750, f"Fecha de la venta: {datos_factura['fecha']}")
+        c.drawString(50, 730, f"Despachador@ responsable: {datos_factura['despachador@_responsable']}")
+        c.drawString(50, 710, f"Codigo de venta: {datos_factura['ID Venta']}")
+        c.drawString(50, 690, f"Identificación cliente: {datos_factura['ID Cliente']}")
+        c.drawString(50, 670, f"Metodo de Pago: {datos_factura['Metodo de Pago']}")
+
+        # Tabla con los productos
+        y = 650
+        for producto in datos_factura["productos"]:
+            # Accediendo a la instancia de Producto y a su cantidad
+            prod = producto[0]
+            total_formateado = f"{prod.get_precio():,.2f}".replace(",", "X").replace(".", ",").replace("X", ".") + " COP"
+            descripcion = f"{prod.get_nombre()} (Ref: {prod.get_referencia()}) - Precio: {total_formateado}"
+            
+            # Dibuja la descripción del producto y la cantidad en el PDF
+            c.drawString(50, y, f"{descripcion} - Cantidad: {producto[1]}")
+            y -= 20
+
+
+        # Calcular y mostrar el total
+        c.drawString(50, y - 40, f"Total: {datos_factura['Total']}")
+
+        # Guardar el PDF
+        c.save()
+        print(f"Factura guardada en: {ruta_completa}")
+
+        if os.name == 'nt':  # Para Windows
+            os.startfile(ruta_completa)
+        elif os.name == 'posix':# Para macOS y Linux
+            if sys.platform == "darwin":  # Para macOS
+                subprocess.call(["open", ruta_completa])
+            else:  # Para Linux
+                subprocess.call(["xdg-open", ruta_completa])
+
     # Función para confirmar la venta
     def confirmar_venta(self):
         # Obtener productos de la lista
@@ -275,28 +345,40 @@ class MenuDespachadora(Frame):
         # Aquí, lo almacenaremos como un atributo dinámico.
         venta.metodo_pago = metodo_pago
         venta.estado = 'pendiente'
-
+        empleado = self.empleado.getNombre()
         # Formatear el total de la venta
-        total_formateado = f"{venta.total:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-
+        total_formateado = f"{venta.total:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".") + " COP"
         # Mostrar confirmación
         confirmacion = messagebox.askyesno("Confirmar Venta", 
-            f"Atendido por: {self.empleado.getNombre()}\n"
-            f"ID Venta: {venta.crear_id_venta()}\n"
+            f"Atendido por: {empleado}\n"
             f"ID Cliente: {id_cliente}\n"
             f"Fecha: {venta.fecha.strftime('%Y-%m-%d %H:%M:%S')}\n"
-            f"Total: {total_formateado} COP\n"
+            f"Total: {total_formateado}\n"
             f"Método de Pago: {metodo_pago}\n\n"
             f"¿Desea confirmar la venta?"
         )
 
         if confirmacion:
+            
             venta.id_venta = venta.crear_id_venta()
             venta.estado = 'confirmada'
+            
+            datos_factura = {
+                "despachador@_responsable": empleado,
+                "ID Venta" : venta.id_venta,
+                "ID Cliente" : id_cliente,
+                "fecha" : venta.fecha.strftime('%Y-%m-%d %H:%M:%S'),
+                "Metodo de Pago" : metodo_pago,
+                "productos": venta.productos,
+                "Total" :  total_formateado
+            }
+
             # Actualizar existencias
             for producto, cantidad in productos:
                 Producto.inventario.actualizar_existencias(producto, cantidad)
             messagebox.showinfo("Éxito", "Venta confirmada exitosamente.")
+            nombre_factura = "Factura - " + venta.id_venta
+            self.generar_factura_pdf(nombre_factura, datos_factura)
             # Cerrar la ventana de registro de venta
             self.registrar_venta_ventana.destroy()
         else:
