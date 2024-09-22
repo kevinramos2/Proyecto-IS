@@ -212,42 +212,62 @@ class MenuInventario(Frame):
             boton_filtrar = Button(ventana_filtro, text="Filtrar", command=mostrar_filtrado)
             boton_filtrar.pack(pady=10)
 
-        # Inicializar lista de productos
-        productos_existentes = []
-        
+        # Crear un diccionario global para almacenar las referencias de productos
+        productos_existentes = {}
+        # Función para cargar los productos existentes 
+        def cargarProductosExistentes():
+            inventario = Producto.inventario.mostrar_completo()  # Obtener el inventario completo
+            referencias_existentes = set()  # Usaremos un conjunto para evitar duplicados
+
+            for producto in inventario:
+                # Separar los detalles del producto
+                detalles = producto.split(" - ")
+
+                # Verificar que el formato tenga al menos 6 partes 
+                if len(detalles) >= 6:
+                    # Extraer la referencia del producto 
+                    referencia = detalles[2].split(": ")[1] if ": " in detalles[2] else detalles[2]
+
+                    # Guardar la referencia en el diccionario global productos_existentes
+                    productos_existentes[referencia] = producto
+
+
         def agregarProducto():
             ventana_agregar = Toplevel(self.ventana)
             ventana_agregar.title("Agregar Nuevo Producto")
             ventana_agregar.geometry("400x480")
-        
+
+            # Llamar a la función de carga de productos al iniciar la aplicación
+            cargarProductosExistentes()
+
             # Título
             titulo = Label(ventana_agregar, text="Agregar Producto", font=("Arial", 16, "bold"))
             titulo.pack(pady=10)
-        
+
             # Nombre del producto
             lbl_nombre = Label(ventana_agregar, text="Nombre:")
             lbl_nombre.pack(pady=5)
             entry_nombre = Entry(ventana_agregar)
             entry_nombre.pack(pady=5)
-        
+
             # Referencia
             lbl_referencia = Label(ventana_agregar, text="Referencia:")
             lbl_referencia.pack(pady=5)
             entry_referencia = Entry(ventana_agregar)
             entry_referencia.pack(pady=5)
-        
+
             # Stock
             lbl_stock = Label(ventana_agregar, text="Cantidad en Stock:")
             lbl_stock.pack(pady=5)
             entry_stock = Entry(ventana_agregar)
             entry_stock.pack(pady=5)
-        
+
             # Precio
             lbl_precio = Label(ventana_agregar, text="Precio:")
             lbl_precio.pack(pady=5)
             entry_precio = Entry(ventana_agregar)
             entry_precio.pack(pady=5)
-        
+
             # Categoría
             lbl_categoria = Label(ventana_agregar, text="Categoría:")
             lbl_categoria.pack(pady=5)
@@ -256,24 +276,23 @@ class MenuInventario(Frame):
             categoria_seleccionada.set(categorias[0])  # Valor por defecto
             menu_categorias = OptionMenu(ventana_agregar, categoria_seleccionada, *categorias)
             menu_categorias.pack(pady=5)
-        
+
             # Color o Aroma
             lbl_color_aroma = Label(ventana_agregar, text="Color/Aroma:")
             lbl_color_aroma.pack(pady=5)
             entry_color_aroma = Entry(ventana_agregar)
             entry_color_aroma.pack(pady=5)
-        
+
             # Función para guardar el producto
             def guardarProducto():
                 nombre = entry_nombre.get()
                 referencia = entry_referencia.get()
-        
+
                 # Verificar si la referencia ya existe en productos_existentes
-                for producto in productos_existentes:
-                    if producto.referencia == referencia:
-                        messagebox.showerror("Error", "La referencia ingresada ya existe.")
-                        return
-        
+                if referencia in productos_existentes:
+                    messagebox.showerror("Error", "La referencia ingresada ya existe.")
+                    return
+
                 try:
                     stock = int(entry_stock.get())
                     precio = float(entry_precio.get())
@@ -281,25 +300,25 @@ class MenuInventario(Frame):
                     # Mostrar mensaje de error si no se ingresan números válidos en stock y precio
                     messagebox.showerror("Error", "Ingrese valores numéricos válidos en 'Stock' y 'Precio'.")
                     return
-        
+
                 categoria = categoria_seleccionada.get()
                 color_aroma = entry_color_aroma.get()
-        
+
                 # Crear nuevo producto
                 if categoria == "Esencia":
                     nuevo_producto = Producto(nombre=nombre, referencia=referencia, stock=stock, categoria=categoria, precio=precio, aroma=color_aroma)
                 else:
                     nuevo_producto = Producto(nombre=nombre, referencia=referencia, stock=stock, categoria=categoria, precio=precio, color=color_aroma)
-        
-                # Agregar nuevo producto a la lista de productos existentes
-                productos_existentes.append(nuevo_producto)
-        
+
+                # Agregar nuevo producto al diccionario de productos existentes
+                productos_existentes[referencia] = nuevo_producto
+
                 # Cerrar ventana después de agregar
                 ventana_agregar.destroy()
-        
+
                 # Mostrar mensaje de confirmación en una ventana emergente
                 messagebox.showinfo("Éxito", f"Producto '{nombre}' agregado con éxito.")
-        
+
             # Botón para guardar el producto
             btn_guardar = Button(ventana_agregar, text="Guardar Producto", command=guardarProducto)
             btn_guardar.pack(pady=10)
