@@ -8,6 +8,8 @@ import os
 import subprocess
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+import textwrap
+
 # Removed playsound import since it's not needed
 
 class MenuDespachadora(Frame):
@@ -423,12 +425,17 @@ class MenuDespachadora(Frame):
                 # Manejo de error en caso de que el atributo 'comentario' no exista
                 descripcion = f"{prod.get_nombre()} - (Ref: {prod.get_referencia()}) - Precio: {total_formateado}"
 
-            # Controlar el ancho de la línea
-            if len(descripcion) > 90:
-                descripcion = descripcion[:90] + '...'  # Cortar la descripción si es muy larga
+            # Controlar el ancho de la línea (90 caracteres como límite)
+            wrapped_text = textwrap.wrap(descripcion, width=90)
             
-            c.drawString(50, y, f"{descripcion} - Cantidad: {producto[1]}")
-            y -= 20
+            # Dibujar cada línea envuelta
+            for line in wrapped_text:
+                c.drawString(50, y, line)
+                y -= 20  # Ajustar la posición vertical para cada nueva línea
+            
+            c.drawString(50, y, f"Cantidad: {producto[1]}")
+            y -= 20  # Espacio para la siguiente descripción
+
 
         # Calcular y mostrar el total
         c.setFont("Helvetica-Bold", 12)
