@@ -22,6 +22,7 @@ class MenuDespachadora(Frame):
         label_frame = Frame(self, height=100, bg="#1B263B", padx=5, pady=5)
         label_frame.pack(side="top", fill="x")
 
+
         mensaje = f"Bienvenido de vuelta {self.empleado.getNombre()}"
         mensaje_bienv = Label(
             label_frame,
@@ -38,43 +39,33 @@ class MenuDespachadora(Frame):
             self.destroy()
 
             # Crear una nueva ventana emergente para la caja
-            caja_ventana = Toplevel(self.ventana)
-            caja_ventana.title("Caja")
-            caja_ventana.geometry("400x300")
-            caja_ventana.config(bg="#F0F0F0")
-            caja_ventana.protocol("WM_DELETE_WINDOW", lambda: None)  # Deshabilitar el botón de cerrar de la ventana
-
+            caja_ventana = Frame(self.ventana,bg="#E0E1DD")
+            caja_ventana.pack(fill="both", expand=True)
+            
+             # Frame para el Mensaje de Bienvenida
+            LabelFrame1 = Frame(caja_ventana, height=100, bg="#1B263B", padx=5, pady=5)
+            LabelFrame1.pack(side="top", fill="x")
             # Etiqueta indicativa
-            etiqueta = Label(caja_ventana, text="Caja Abierta", font=("arial", 16), bg="#F0F0F0")
+            etiqueta = Label(LabelFrame1, text="Caja Abierta", font=("arial", 16), bg="#1B263B")
             etiqueta.pack(pady=20)
 
             # Frame para los botones dentro de la ventana de la caja
-            botones_frame = Frame(caja_ventana, bg="#F0F0F0")
-            botones_frame.pack(pady=10)
+            botones_frame = Frame(caja_ventana, bg="#415A77", height=400, width=500)
+            botones_frame.pack_propagate(False)
+            botones_frame.pack(fill="y", expand=True, pady=5, padx=5)
 
             # Botón Registrar Venta
             boton_registrar_venta = Button(
                 botones_frame,
                 text="Registrar Venta",
-                font=("arial", 12),
-                bg="#F0F0F0",
+                font=("arial", 20, "bold"),
+                bg="#E0E1DD",
                 fg="black",
                 width=20,
+                padx=5,
                 command=self.abrir_registrar_venta  # Actualizado
             )
-            boton_registrar_venta.pack(pady=5)
-            
-            # # Botón Registrar Pedido
-            # boton_registrar_pedido = Button(
-            #     botones_frame,
-            #     text="Registrar Pedido",
-            #     font=("arial", 12),
-            #     bg="#F0F0F0",
-            #     fg="black",
-            #     width=20,
-            #     command=self.abrir_registrar_pedido 
-            # )
-            # boton_registrar_pedido.pack(pady=5)
+            boton_registrar_venta.pack(fill="x", side="top", expand= True, pady=5)
             
             # Botón Cerrar Caja
             def cerrarCaja():
@@ -87,13 +78,14 @@ class MenuDespachadora(Frame):
             boton_cerrar_caja = Button(
                 botones_frame,
                 text="Cerrar Caja",
-                font=("arial", 12),
-                bg="#F0F0F0",
+                font=("arial", 20, "bold"),
+                bg="#E0E1DD",
                 fg="black",
                 width=20,
+                padx=5,
                 command=cerrarCaja
             )
-            boton_cerrar_caja.pack(pady=5)
+            boton_cerrar_caja.pack(fill="x", side="top", expand= True, pady=5)
 
         # Frame para los botones funcionales
         frame_funcionalidades = Frame(self, bg="#415A77")
