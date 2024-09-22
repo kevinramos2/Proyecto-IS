@@ -48,7 +48,7 @@ class MenuDespachadora(Frame):
             LabelFrame1 = Frame(caja_ventana, height=100, bg="#1B263B", padx=5, pady=5)
             LabelFrame1.pack(side="top", fill="x")
             # Etiqueta indicativa
-            etiqueta = Label(LabelFrame1, text="Caja Abierta", font=("arial", 16), bg="#1B263B")
+            etiqueta = Label(LabelFrame1, text="Caja Abierta", font=("arial", 16), bg="#1B263B", fg="white")
             etiqueta.pack(pady=20)
 
             # Frame para los botones dentro de la ventana de la caja
