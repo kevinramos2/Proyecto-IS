@@ -35,6 +35,7 @@ class PlaceHolderEntry(Entry):
             self._set_placeholder()
 
 class LogInGrafico(Frame):
+    Caja_Cerrada = False
     def __init__(self,ventana):
         super().__init__(ventana)
         self.config(bg="#E0E1DD", width=400, height=350)
@@ -92,7 +93,7 @@ class LogInGrafico(Frame):
         self.EntryId.grid(row=1, column=1,padx=10, pady=10, ipadx=2, ipady=2)
 
         # Etiqueta para la contraseña
-        self.EntryContraseña = PlaceHolderEntry(FrameAuxiliar, placeholder="Contraseña", width=40, bd = 5, bg= "#E0E1DD")
+        self.EntryContraseña = PlaceHolderEntry(FrameAuxiliar, placeholder="Contraseña", width=40, bd = 5, bg= "#E0E1DD", show="*")
         self.EntryContraseña.grid(row=2, column=1,padx=10, pady=10,ipadx=2, ipady=2)
 
         
@@ -140,7 +141,6 @@ class LogInGrafico(Frame):
                 messagebox.showinfo("Login", "Login correcto, puede ingresar")
 
                 UsuarioRegistrado = Empleado.buscarUsuario(NumeroIdUser)
-                print(UsuarioRegistrado)
                 
                 if isinstance(UsuarioRegistrado, Administrador):
                     self.destroy()
@@ -148,13 +148,7 @@ class LogInGrafico(Frame):
                 elif isinstance(UsuarioRegistrado, Despachadora):
                     self.destroy()
                     MenuDespachadora(self.ventana, UsuarioRegistrado)
-
-                #elif isinstance(UsuarioRegistrado, Fabricador):
-                    
-                #else:
-                    
             else:
-                
                 messagebox.showerror("Login", "Id o contraseña invalidas. Intente nuevamente.")
 
 

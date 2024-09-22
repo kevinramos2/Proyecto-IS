@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import messagebox
 from datetime import datetime
 from GestorAplicacion.ReporteVentaDiario import ReporteDeVentas
 from GestorAplicacion.Gasto import Gasto
+from BaseDeDatos.serializador import Serializador
+
 
 
 class MenuReporte(Frame):
@@ -12,6 +15,28 @@ class MenuReporte(Frame):
         self.pack(fill="both",expand=True)
         self.ventana = ventana
         self.empleado = empleado
+
+        def cerrarSesion():
+            from GestorGrafico.LogInGrafico import LogInGrafico
+            self.destroy()
+            LogInGrafico(self.ventana)
+        
+        def cerrarAplicacion():
+            Serializador.Serializar()
+            self.ventana.destroy()
+
+
+        # Barra del Menu
+        menuBar = Menu(self.ventana)
+        self.ventana.option_add("*tearOff", False)
+        self.ventana.config(menu=menuBar)
+
+        # Menu para salir 
+        menuSalir = Menu(menuBar)
+        menuBar.add_cascade(label="Salir", menu=menuSalir, activebackground="#415A77")
+
+        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=cerrarAplicacion)
+        menuSalir.add_cascade(label="Cerrar Sesion", activebackground="#415A77",command=cerrarSesion)
 
         # Frame para el Mensaje de Bienvenida
         LabelFrame = Frame(self, height=100, bg="#1B263B", padx=5, pady=5)
@@ -28,7 +53,7 @@ class MenuReporte(Frame):
 
 
         # Boton para volver al menu principal
-        ImagenHome = "BaseDeDatos\Imagenes\home-solid-36.png"
+        ImagenHome = "BaseDeDatos/Imagenes/home-solid-36.png"
         foto = tk.PhotoImage(file=ImagenHome)
 
         MenuPrincipalBoton = Button(LabelFrame, image=foto, command=volverAlMenu)
@@ -45,24 +70,28 @@ class MenuReporte(Frame):
         # Funciones para cada boton
 
         def AbrirReporteVentas():
-            ventana_Reporte = Toplevel(self.ventana)
-            ventana_Reporte.title("Reporte de venta")
-            ventana_Reporte.geometry("400x500")
+            from GestorGrafico.LogInGrafico import LogInGrafico
+            if (LogInGrafico.Caja_Cerrada):
+                ventana_Reporte = Toplevel(self.ventana)
+                ventana_Reporte.title("Reporte de venta")
+                ventana_Reporte.geometry("400x500")
 
-            reporteDeVentas = ReporteDeVentas()
+                reporteDeVentas = ReporteDeVentas()
 
-            # Frame titulo y fecha actual
-            LabelFrame = Frame(ventana_Reporte, height=100, bg="#1B263B", padx=5, pady=5)
-            LabelFrame.pack(side="top", fill="x")
+                # Frame titulo y fecha actual
+                LabelFrame = Frame(ventana_Reporte, height=100, bg="#1B263B", padx=5, pady=5)
+                LabelFrame.pack(side="top", fill="x")
 
-            fechaActual = datetime.now().strftime('%Y-%m-%d')
-            mensaje = f"Reporte de ventas del dia {fechaActual}"
+                fechaActual = datetime.now().strftime('%Y-%m-%d')
+                mensaje = f"Reporte de ventas del dia {fechaActual}"
 
-            mensajeBienv = Label(LabelFrame, text=mensaje, font=("arial", 15, "italic underline"),bg="#1B263B" , fg = "white")
-            mensajeBienv.pack(side="left", padx=2)
+                mensajeBienv = Label(LabelFrame, text=mensaje, font=("arial", 15, "italic underline"),bg="#1B263B" , fg = "white")
+                mensajeBienv.pack(side="left", padx=2)
 
-            #Generar todo el frame del reporte
-            reporteDeVentas.generar_Reporte_diario_tkinter(ventana_Reporte)
+                #Generar todo el frame del reporte
+                reporteDeVentas.generar_Reporte_diario_tkinter(ventana_Reporte)
+            else:
+                messagebox.showerror("Error en Reportes", "No se puede acceder al reporte diario sin antes cerrar caja.")
 
         def AbrirGastos():
             ventana_Gastos =  Toplevel(self.ventana)

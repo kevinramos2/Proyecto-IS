@@ -19,7 +19,7 @@ class Gasto:
         gastos_del_dia = [gasto for gasto in Gasto._todos_los_gastos if gasto.fecha == fecha_actual]
         return gastos_del_dia
 
-
+    
     def registrar_gasto():
         print("Registro de nuevo gasto")
         print("------------------------")
@@ -44,6 +44,15 @@ class Gasto:
         print(f"Gasto registrado: {concepto}, Valor: ${valor:.2f}, Fecha: {fecha_actual}")
 
     @classmethod
+    def Gastos_dia(cls):
+        cls.gastos_listbox.delete(0,tk.END)
+        gastosDelDia = Gasto.getGastosDia()
+        for gasto in gastosDelDia:
+            texto = f"Valor del gasto: {gasto.valor}  | fecha: {gasto.fecha} | Concepto: {gasto.concepto}"
+
+            cls.gastos_listbox.insert(tk.END, texto)
+
+    @classmethod
     def Colocar_Gastos(cls):
         cls.gastos_listbox.delete(0,tk.END)
         for gasto in Gasto._todos_los_gastos:
@@ -51,6 +60,12 @@ class Gasto:
 
             cls.gastos_listbox.insert(tk.END, texto)
 
+    @classmethod
+    def decidir_gastos(cls, *args):
+        if cls.opcion_seleccionada.get() == "Gastos del dia":
+            Gasto.Gastos_dia()
+        elif cls.opcion_seleccionada.get() == "Gastos Totales":
+            Gasto.Colocar_Gastos()
 
     @classmethod
     def agregar_gasto(cls):
@@ -67,7 +82,7 @@ class Gasto:
             cls.valor_gasto_entry.delete(0,tk.END)
             cls.caja_texto_Concepto.delete("1.0", tk.END)
 
-            Gasto.Colocar_Gastos()
+            Gasto.decidir_gastos()
 
     @classmethod
     def registrar_gasto_tkinter(cls,ventana):
@@ -100,9 +115,6 @@ class Gasto:
         agregar_gasto_btn = Button(informe_frame, text="Agregar Producto", bg="#F0F0F0", fg="black", command= Gasto.agregar_gasto)
         agregar_gasto_btn.grid(row=5, column=0, columnspan=2, pady=10)
         
-        
-
-        
 
     @classmethod
     def generar_gastos_tkinter(cls, ventana):
@@ -115,12 +127,20 @@ class Gasto:
         informe_frame.columnconfigure(1, weight=3)
 
         # Label para total de ventas
-        Gastos_label = Label(informe_frame, text="Gastos totales:", bg="#F0F0F0",font=("arial",12,"italic"))
-        Gastos_label.grid(row=0, column=0, padx=5, pady=(5, 2), sticky="e")
+        #Gastos_label = Label(informe_frame, text="Gastos totales:", bg="#F0F0F0",font=("arial",12,"italic"))
+        #Gastos_label.grid(row=0, column=0, padx=5, pady=(5, 2), sticky="e")
 
         # Boton para agregar gastos
         Boton_añadir_gastos = Button(informe_frame, text= "Agregar Gasto", command= lambda: Gasto.registrar_gasto_tkinter(ventana))
         Boton_añadir_gastos.grid(row=0,column=1,padx=5, pady=5)
+
+        #Lista para filtrar gastos del dia o gastos totales
+        cls.opcion_seleccionada = StringVar()
+        cls.opcion_seleccionada.set("Seleccione una opcion")
+
+        opciones = ["Gastos del dia", "Gastos Totales"]
+        menu_opciones = OptionMenu(informe_frame, cls.opcion_seleccionada, *opciones)
+        menu_opciones.grid(row=0, column=0, sticky="e")
 
         # Listbox para mostrar los gastos agregados
         cls.gastos_listbox = Listbox(informe_frame, width=80)
@@ -130,8 +150,10 @@ class Gasto:
         scrollbar = Scrollbar(informe_frame, orient=VERTICAL, command=cls.gastos_listbox.yview)
         scrollbar.grid(row=3, column=2, sticky='ns')
         cls.gastos_listbox.config(yscrollcommand=scrollbar.set)
-
-        Gasto.Colocar_Gastos()
+        
+        #Vincular la opcion selecciona con la funcin para actualizar los gastos
+        cls.opcion_seleccionada.trace("w", cls.decidir_gastos)
+        Gasto.decidir_gastos()
 
     def generar_reporte_gastos_diario():
         print("Reporte de gastos diario")

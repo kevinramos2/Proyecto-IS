@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from GestorAplicacion.Producto import Producto
+from BaseDeDatos.serializador import Serializador
 
 class MenuInventario(Frame):
     def __init__(self, ventana, empleado):
@@ -10,6 +11,30 @@ class MenuInventario(Frame):
         self.pack(fill="both",expand=True)
         self.ventana = ventana
         self.empleado = empleado
+        
+
+        def cerrarSesion():
+            from GestorGrafico.LogInGrafico import LogInGrafico
+            self.destroy()
+            LogInGrafico(self.ventana)
+        
+        def cerrarAplicacion():
+            Serializador.Serializar()
+            self.ventana.destroy()
+
+
+        # Barra del Menu
+        menuBar = Menu(self.ventana)
+        self.ventana.option_add("*tearOff", False)
+        self.ventana.config(menu=menuBar)
+
+        # Menu para salir 
+        menuSalir = Menu(menuBar)
+        menuBar.add_cascade(label="Salir", menu=menuSalir, activebackground="#415A77")
+
+        menuSalir.add_cascade(label="Salir de la aplicacion", activebackground="#415A77", command=cerrarAplicacion)
+        menuSalir.add_cascade(label="Cerrar Sesion", 
+        activebackground="#415A77",command=cerrarSesion)
 
         # Frame para el Mensaje de Bienvenida
         LabelFrame = Frame(self, height=100, bg="#1B263B", padx=5, pady=5)
@@ -389,7 +414,7 @@ class MenuInventario(Frame):
             btn_cancelar.pack(pady=10)
 
         # Boton para volver al menu principal
-        ImagenHome = "BaseDeDatos\Imagenes\home-solid-36.png"
+        ImagenHome = "BaseDeDatos/Imagenes/home-solid-36.png"
         foto = tk.PhotoImage(file=ImagenHome)
 
         MenuPrincipalBoton = Button(LabelFrame, image=foto, command=volverAlMenu)

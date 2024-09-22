@@ -4,7 +4,6 @@ from tkinter import messagebox
 from datetime import datetime
 from GestorAplicacion.Producto import Producto
 from GestorAplicacion.Venta import Venta
-# Removed playsound import since it's not needed
 
 class MenuDespachadora(Frame):
     def __init__(self, ventana, empleado):
@@ -65,6 +64,7 @@ class MenuDespachadora(Frame):
                 caja_ventana.destroy()
                 # Volver a la pantalla de login
                 from GestorGrafico.LogInGrafico import LogInGrafico
+                LogInGrafico.Caja_Cerrada = True
                 LogInGrafico(self.ventana)
 
             boton_cerrar_caja = Button(
