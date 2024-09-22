@@ -120,7 +120,7 @@ class MenuDespachadora(Frame):
     def abrir_registrar_venta(self):
             registrar_venta_ventana = Toplevel(self.ventana)
             registrar_venta_ventana.title("Registrar Venta")
-            registrar_venta_ventana.geometry("600x800") 
+            registrar_venta_ventana.geometry("1000x800") 
             registrar_venta_ventana.config(bg="#F0F0F0")
             self.registrar_venta_ventana = registrar_venta_ventana  # Guardar referencia para cerrarla después
 
@@ -396,53 +396,70 @@ class MenuDespachadora(Frame):
         # Crear el documento PDF
         c = canvas.Canvas(ruta_completa, pagesize=A4)
 
+        # Agregar una imagen (logo) en la esquina superior izquierda
+        logo_path = "BaseDeDatos\\Imagenes\\unnamed.jpg"  # Cambia esto a la ruta de tu imagen
+        c.drawImage(logo_path, 50, 740, width=80, height=80)  # Ajuste del tamaño y posición de la imagen
+
         # Título de la factura
-        titulo = "Velas manare"
+        titulo = "Velas Manare"
         c.setFont("Helvetica-Bold", 24)
-        c.drawString(200, 780, titulo)
+        c.drawString(180, 780, titulo)  # Centrar el título
 
         # Información del cliente y la factura
         c.setFont("Helvetica", 12)
-        c.drawString(50, 750, f"Fecha de la venta: {datos_factura['fecha']}")
-        c.drawString(50, 730, f"Despachador@ responsable: {datos_factura['despachador@_responsable']}")
-        c.drawString(50, 710, f"Codigo de venta: {datos_factura['ID Venta']}")
-        c.drawString(50, 690, f"Identificación cliente: {datos_factura['ID Cliente']}")
-        c.drawString(50, 670, f"Metodo de Pago: {datos_factura['Metodo de Pago']}")
-        c.drawString(50, 650, f"Estado: {datos_factura['Estado']}")
-
+        c.drawString(50, 700, f"Fecha de la venta: {datos_factura['fecha']}")
+        c.drawString(50, 680, f"Despachador@ responsable: {datos_factura['despachador@_responsable']}")
+        c.drawString(50, 660, f"Codigo de venta: {datos_factura['ID Venta']}")
+        c.drawString(50, 640, f"Identificación cliente: {datos_factura['ID Cliente']}")
+        c.drawString(50, 620, f"Metodo de Pago: {datos_factura['Metodo de Pago']}")
+        c.drawString(50, 600, f"Estado: {datos_factura['Estado']}")
 
         # Tabla con los productos
-        y = 630
+        y = 580
         for producto in datos_factura["productos"]:
-            # Accediendo a la instancia de Producto y a su cantidad
             prod = producto[0]
             total_formateado = f"{prod.get_precio():,.2f}".replace(",", "X").replace(".", ",").replace("X", ".") + " COP"
             
-            if prod.comentario == None:
+            try:
+                comentario = prod.get_comentario()
+                if comentario is None:
+                    descripcion = f"{prod.get_nombre()} - (Ref: {prod.get_referencia()}) - Precio: {total_formateado}"
+                else:
+                    descripcion = f"{prod.get_nombre()} - (Ref: {prod.get_referencia()}) - Precio: {total_formateado} - Comentario: {comentario}"
+            except AttributeError:
+                # Manejo de error en caso de que el atributo 'comentario' no exista
                 descripcion = f"{prod.get_nombre()} - (Ref: {prod.get_referencia()}) - Precio: {total_formateado}"
-            else:
-                descripcion = f"{prod.get_nombre()} - (Ref: {prod.get_referencia()}) - Precio: {total_formateado} - Comentario: {prod.comentario}"
-                
-            # Dibuja la descripción del producto y la cantidad en el PDF
+
+            # Controlar el ancho de la línea
+            if len(descripcion) > 90:
+                descripcion = descripcion[:90] + '...'  # Cortar la descripción si es muy larga
+            
             c.drawString(50, y, f"{descripcion} - Cantidad: {producto[1]}")
-                
             y -= 20
 
-
         # Calcular y mostrar el total
+        c.setFont("Helvetica-Bold", 12)
         c.drawString(50, y - 40, f"Total: {datos_factura['Total']}")
+
+        # Agregar el pie de página con "Agario Solutions"
+        c.setFont("Helvetica-Oblique", 10)
+        c.drawString(200, 30, "Agario Solutions")  # Posición cercana al pie de la página
 
         # Guardar el PDF
         c.save()
         print(f"Factura guardada en: {ruta_completa}")
 
+        # Abrir el PDF automáticamente
         if os.name == 'nt':  # Para Windows
             os.startfile(ruta_completa)
-        elif os.name == 'posix':# Para macOS y Linux
+        elif os.name == 'posix':  # Para macOS y Linux
             if sys.platform == "darwin":  # Para macOS
                 subprocess.call(["open", ruta_completa])
             else:  # Para Linux
                 subprocess.call(["xdg-open", ruta_completa])
+
+
+
 
     # Función para confirmar la venta
     def confirmar_venta(self):

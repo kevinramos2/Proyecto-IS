@@ -54,6 +54,12 @@ class Producto:
 
     def get_precio(self):
         return self.precio
+    
+    def get_comentario(self):
+        return self.comentario
+    
+    def set_comentario(self, comentario):
+        self.comentario = comentario
 
     def set_precio(self, precio):
         self.precio = precio
