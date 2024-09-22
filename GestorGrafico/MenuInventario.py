@@ -334,7 +334,7 @@ class MenuInventario(Frame):
             titulo.pack(pady=10)
 
             # Campo de búsqueda
-            lbl_buscar = Label(ventana_actualizar, text="Buscar Producto (por Nombre o Referencia):")
+            lbl_buscar = Label(ventana_actualizar, text="Buscar Producto (por Referencia):")
             lbl_buscar.pack(pady=5)
             entry_buscar = Entry(ventana_actualizar)
             entry_buscar.pack(pady=5)
