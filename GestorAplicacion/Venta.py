@@ -6,14 +6,14 @@ class Venta:
     PREFIJO_ID = 'V'  # Prefijo para los IDs de venta
     contador_id = 0  # Contador estático para IDs únicos
 
-    def __init__(self, id_venta=None, id_cliente=None, productos=None, fecha=None, total=None, estado='pendiente'):
+    def __init__(self, id_venta=None, id_cliente=None, productos=None, fecha=None, total=None, estado=True):
         self.id_venta = id_venta
         self.id_cliente = id_cliente
         self.id_cliente = id_cliente
         self.productos = productos
         self.fecha = fecha
         self.total = total
-        self.estado = estado
+        self.estado = True
 
         Venta._todas_las_ventas.append(self)
 

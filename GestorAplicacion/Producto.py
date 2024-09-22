@@ -3,12 +3,14 @@ from GestorAplicacion.InventarioDoubleList import InventarioDoubleList
 
 class Producto:
     inventario = InventarioDoubleList()
-    def __init__(self, nombre=None, referencia=None, stock=0, categoria=None, precio=0, color=None, aroma=None):
+    contador_personalizados = 0
+    def __init__(self, nombre=None, referencia=None, stock=0, categoria=None, precio=0, color=None, aroma=None, comentario = None):
         self.nombre = nombre
         self.referencia = referencia
         self.stock = stock
         self.categoria = categoria
         self.precio = precio
+        self.comentario = comentario
         
         # Determinar si es un producto con color o aroma
         if categoria == "Esencia":
@@ -52,6 +54,12 @@ class Producto:
 
     def get_precio(self):
         return self.precio
+    
+    def get_comentario(self):
+        return self.comentario
+    
+    def set_comentario(self, comentario):
+        self.comentario = comentario
 
     def set_precio(self, precio):
         self.precio = precio
