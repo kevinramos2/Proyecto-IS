@@ -212,39 +212,42 @@ class MenuInventario(Frame):
             boton_filtrar = Button(ventana_filtro, text="Filtrar", command=mostrar_filtrado)
             boton_filtrar.pack(pady=10)
 
+        # Inicializar lista de productos
+        productos_existentes = []
+        
         def agregarProducto():
             ventana_agregar = Toplevel(self.ventana)
             ventana_agregar.title("Agregar Nuevo Producto")
             ventana_agregar.geometry("400x480")
-
+        
             # Título
             titulo = Label(ventana_agregar, text="Agregar Producto", font=("Arial", 16, "bold"))
             titulo.pack(pady=10)
-
+        
             # Nombre del producto
             lbl_nombre = Label(ventana_agregar, text="Nombre:")
             lbl_nombre.pack(pady=5)
             entry_nombre = Entry(ventana_agregar)
             entry_nombre.pack(pady=5)
-
+        
             # Referencia
             lbl_referencia = Label(ventana_agregar, text="Referencia:")
             lbl_referencia.pack(pady=5)
             entry_referencia = Entry(ventana_agregar)
             entry_referencia.pack(pady=5)
-
+        
             # Stock
             lbl_stock = Label(ventana_agregar, text="Cantidad en Stock:")
             lbl_stock.pack(pady=5)
             entry_stock = Entry(ventana_agregar)
             entry_stock.pack(pady=5)
-
+        
             # Precio
             lbl_precio = Label(ventana_agregar, text="Precio:")
             lbl_precio.pack(pady=5)
             entry_precio = Entry(ventana_agregar)
             entry_precio.pack(pady=5)
-
+        
             # Categoría
             lbl_categoria = Label(ventana_agregar, text="Categoría:")
             lbl_categoria.pack(pady=5)
@@ -253,17 +256,24 @@ class MenuInventario(Frame):
             categoria_seleccionada.set(categorias[0])  # Valor por defecto
             menu_categorias = OptionMenu(ventana_agregar, categoria_seleccionada, *categorias)
             menu_categorias.pack(pady=5)
-
+        
             # Color o Aroma
             lbl_color_aroma = Label(ventana_agregar, text="Color/Aroma:")
             lbl_color_aroma.pack(pady=5)
             entry_color_aroma = Entry(ventana_agregar)
             entry_color_aroma.pack(pady=5)
-
+        
             # Función para guardar el producto
             def guardarProducto():
                 nombre = entry_nombre.get()
                 referencia = entry_referencia.get()
+        
+                # Verificar si la referencia ya existe en productos_existentes
+                for producto in productos_existentes:
+                    if producto.referencia == referencia:
+                        messagebox.showerror("Error", "La referencia ingresada ya existe.")
+                        return
+        
                 try:
                     stock = int(entry_stock.get())
                     precio = float(entry_precio.get())
@@ -271,22 +281,25 @@ class MenuInventario(Frame):
                     # Mostrar mensaje de error si no se ingresan números válidos en stock y precio
                     messagebox.showerror("Error", "Ingrese valores numéricos válidos en 'Stock' y 'Precio'.")
                     return
-
+        
                 categoria = categoria_seleccionada.get()
                 color_aroma = entry_color_aroma.get()
-
+        
                 # Crear nuevo producto
                 if categoria == "Esencia":
                     nuevo_producto = Producto(nombre=nombre, referencia=referencia, stock=stock, categoria=categoria, precio=precio, aroma=color_aroma)
                 else:
                     nuevo_producto = Producto(nombre=nombre, referencia=referencia, stock=stock, categoria=categoria, precio=precio, color=color_aroma)
-
+        
+                # Agregar nuevo producto a la lista de productos existentes
+                productos_existentes.append(nuevo_producto)
+        
                 # Cerrar ventana después de agregar
                 ventana_agregar.destroy()
-
+        
                 # Mostrar mensaje de confirmación en una ventana emergente
                 messagebox.showinfo("Éxito", f"Producto '{nombre}' agregado con éxito.")
-
+        
             # Botón para guardar el producto
             btn_guardar = Button(ventana_agregar, text="Guardar Producto", command=guardarProducto)
             btn_guardar.pack(pady=10)
