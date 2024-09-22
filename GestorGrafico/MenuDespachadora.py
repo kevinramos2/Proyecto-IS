@@ -63,7 +63,19 @@ class MenuDespachadora(Frame):
                 command=self.abrir_registrar_venta  # Actualizado
             )
             boton_registrar_venta.pack(pady=5)
-
+            
+            # Botón Registrar Pedido
+            boton_registrar_venta = Button(
+                botones_frame,
+                text="Registrar Pedido",
+                font=("arial", 12),
+                bg="#F0F0F0",
+                fg="black",
+                width=20,
+                #command=self.abrir_registrar_venta  #Aqui va toda la funcion de su boton Daniel
+            )
+            boton_registrar_venta.pack(pady=5)
+            
             # Botón Cerrar Caja
             def cerrarCaja():
                 caja_ventana.destroy()
