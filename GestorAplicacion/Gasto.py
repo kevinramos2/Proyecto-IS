@@ -112,7 +112,7 @@ class Gasto:
         cls.caja_texto_Concepto.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky="nsew", rowspan=3)
 
         # Botón para agregar producto a la lista
-        agregar_gasto_btn = Button(informe_frame, text="Agregar Producto", bg="#F0F0F0", fg="black", command= Gasto.agregar_gasto)
+        agregar_gasto_btn = Button(informe_frame, text="Agregar", bg="#F0F0F0", fg="black", command= Gasto.agregar_gasto)
         agregar_gasto_btn.grid(row=5, column=0, columnspan=2, pady=10)
         
 
