@@ -547,8 +547,9 @@ class MenuDespachadora(Frame):
 
 
             # Actualizar existencias
-            for producto, cantidad in productos:
-                Producto.inventario.actualizar_existencias(producto, cantidad)
+            if (self.tipo_entrega_var.get() != "Pedido"):
+                for producto, cantidad in productos:
+                    Producto.inventario.actualizar_existencias(producto, cantidad)
             messagebox.showinfo("Éxito", "Venta confirmada exitosamente.")
             nombre_factura = "Factura - " + venta.id_venta
             self.generar_factura_pdf(nombre_factura, datos_factura)
