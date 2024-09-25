@@ -251,11 +251,18 @@ class MenuDespachadora(Frame):
         self.cuestionario_ventana.geometry("400x500")  # Aumentar el tamaño de la ventana
         self.cuestionario_ventana.config(bg="#F0F0F0")
 
-        # Entrada para la categoría
+        # Etiqueta para la categoría
         categoria_label = Label(self.cuestionario_ventana, text="Categoría:", bg="#F0F0F0")
         categoria_label.pack(pady=5)
-        self.categoria_label_entry = Entry(self.cuestionario_ventana)  # Definir como atributo
-        self.categoria_label_entry.pack(pady=5)
+
+        # Crear un menú desplegable (OptionMenu) para la categoría
+        categorias = ["Velon", "Vela Lisa", "Vela Lisa Baby", "Esencia"]
+        self.categoria_seleccionada_var = StringVar(self.cuestionario_ventana)
+        self.categoria_seleccionada_var.set(categorias[0])  # Valor por defecto
+
+        # Menú desplegable para la selección de la categoría
+        menu_categorias = OptionMenu(self.cuestionario_ventana, self.categoria_seleccionada_var, *categorias)
+        menu_categorias.pack(pady=5)
 
         # Entrada para la cantidad
         cantidad_label = Label(self.cuestionario_ventana, text="Cantidad:", bg="#F0F0F0")
@@ -280,7 +287,8 @@ class MenuDespachadora(Frame):
         agregar_btn.pack(pady=20)
 
     def agregar_producto_personalizado(self):
-        categoria = self.categoria_label_entry.get().strip()
+        # Obtener la categoría seleccionada del OptionMenu
+        categoria = self.categoria_seleccionada_var.get()
         cantidad = self.cantidad_personalizada_entry.get().strip()
         precio = self.precio_entry.get().strip()
         comentario = self.comentario_text.get("1.0", "end-1c").strip()
@@ -297,19 +305,12 @@ class MenuDespachadora(Frame):
         except ValueError:
             self.mostrar_mensaje_error("Cantidad y Precio deben ser números válidos.")
             return
-        
-        # Verificar que categoria es un string no vacío y no contiene solo dígitos
-        if not isinstance(categoria, str) or not categoria or categoria.isdigit():
-            self.mostrar_mensaje_error("La categoría debe ser un string no vacío que no contenga solo números.")
-            return
 
-        # Verificar que comentario es un string no vacío y no contiene solo dígitos
+        # Verificar que el comentario es un string no vacío y no contiene solo dígitos
         if not isinstance(comentario, str) or not comentario or comentario.isdigit():
             self.mostrar_mensaje_error("El comentario debe ser un string no vacío que no contenga solo números.")
             return
 
-
-        
         self.cuestionario_ventana.destroy()
 
         nombre = "personalizado" + str(Producto.contador_personalizados)
@@ -319,7 +320,7 @@ class MenuDespachadora(Frame):
 
         # Aquí agregarías el producto a la lista o a donde sea necesario
         self.productos_listbox.insert(END, f"{producto.nombre} (Ref: {producto.referencia}) - Cantidad: {cantidad_int} - Precio Total: {precio_float} COP - Comentario: {comentario}")
-    
+        
     def mostrar_mensaje_error(self, mensaje):
         error_ventana = Toplevel(self.cuestionario_ventana)
         error_ventana.title("Error")
