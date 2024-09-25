@@ -234,6 +234,10 @@ class MenuDespachadora(Frame):
             self.mensaje_advertencia.config(text="")
             self.agregar_producto_btn.config(state=NORMAL)
 
+            # Deshabilitar los Radiobuttons para evitar cambios
+            self.entrega_inmediata_rb.config(state=DISABLED)
+            self.pedido_rb.config(state=DISABLED)
+
             # Habilitar el botón de producto personalizado solo si es "Pedido"
             if self.tipo_entrega_var.get() == "Pedido":
                 self.agregar_producto_personalizado_btn.config(state=NORMAL)
