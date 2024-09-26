@@ -67,7 +67,7 @@ class ReporteDeVentas:
 
         # Label para Arqueo:
         gastos_del_dia = sum(gasto.valor for gasto in Gasto.getGastosDia())
-        Arqueo_text = f"Ganancias o Perdidas: {total_dia - gastos_del_dia}"
+        Arqueo_text = f"Balance neto del dia: {total_dia - gastos_del_dia}"
         Arqueo_label = Label(informe_frame, text=Arqueo_text, fg="red")
         Arqueo_label.grid(row=5, column=0, columnspan=2, pady= 5)
 
