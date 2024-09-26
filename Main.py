@@ -32,29 +32,29 @@ if __name__ == "__main__":
     # decoradora1 = Decoradora("Juan", 6785, "kkkk")
     
     # # Crear productos
-    # p1 = Producto("Velón #6", "001", 10, "Velon", 2500, "Blanco",None)
+    # p1 = Producto("Velón #6 Blanco", "001", 10, "Velon", 2500, "Blanco",None)
     
-    # p2 = Producto("Velón #6", "002", 10, "Velon", 2500, "Azul",None)
+    # p2 = Producto("Velón #6 Azul", "002", 10, "Velon", 2500, "Azul",None)
 
-    # p3 =  Producto("Velón #6", "003", 10, "Velon", 2500, "Rojo",None)
+    # p3 =  Producto("Velón #6 Rojo", "003", 10, "Velon", 2500, "Rojo",None)
   
-    # p4 =  Producto("Velón #6", "004", 10, "Velon",  2500,"Amarillo",None)
+    # p4 =  Producto("Velón #6 Amarillo", "004", 10, "Velon",  2500,"Amarillo",None)
   
-    # p5 =  Producto("Velón #15", "011", 10, "Velon", 6000,"Blanco",None)
+    # p5 =  Producto("Velón #15 Blanco", "011", 10, "Velon", 6000,"Blanco",None)
    
-    # p6 =  Producto("Velón #15", "012", 10, "Velon",  6000,"Azul",None)
+    # p6 =  Producto("Velón #15 Azul", "012", 10, "Velon",  6000,"Azul",None)
     
-    # p7 =  Producto("Velón #15", "013", 10, "Velon",  6000,"Rojo",None)
+    # p7 =  Producto("Velón #15 Rojo", "013", 10, "Velon",  6000,"Rojo",None)
     
-    # p8 =  Producto("Velón #15", "014", 10, "Velon", 6000,"Amarillo",None )
+    # p8 =  Producto("Velón #15 Amarillo", "014", 10, "Velon", 6000,"Amarillo",None )
     
-    # p9 =  Producto("Velón #25", "021", 10, "Velon",  15000,"Blanco",None)
+    # p9 =  Producto("Velón #25 Blanco", "021", 10, "Velon",  15000,"Blanco",None)
  
-    # p10 = Producto("Velón #25", "022", 10, "Velon",  15000,"Azul",None)
+    # p10 = Producto("Velón #25 Azul", "022", 10, "Velon",  15000,"Azul",None)
  
-    # p11 = Producto("Velón #25", "023", 10, "Velon",  15000,"Rojo",None)
+    # p11 = Producto("Velón #25 Rojo", "023", 10, "Velon",  15000,"Rojo",None)
 
-    # p12 = Producto("Velón #25", "024", 10, "Velon",  15000,"Amarillo",None)
+    # p12 = Producto("Velón #25 Amarillo", "024", 10, "Velon",  15000,"Amarillo",None)
     
     # p13 = Producto("Vela Lisa Blanca", "111", 10, "Vela Lisa",  6000,"Blanco",None)
  
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # p30 = Producto("Esencia de Canela", "210", 10, "Esencia",3000,None,"Canela")
     
-    # Serializador.Serializar()
+    #Serializador.Serializar()
     #LogIn.ImprimirLogIn()
     window  = MainWindow()
     window.mainloop()
