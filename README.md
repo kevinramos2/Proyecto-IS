@@ -22,14 +22,6 @@ El sistema diseñado incluye las siguientes funcionalidades principales:
 - **Seguimiento de datos**: Registro y visualización de ventas y gastos diarios.  
 
 ---
-
-## 🔧 Requisitos de Instalación
-
-Para ejecutar el prototipo, es necesario instalar la biblioteca **reportLab**. Puedes hacerlo con el siguiente comando:  
-
-```bash
-pip install reportlab
-
 ## 👨‍💻 Colaboradores
 
 El proyecto fue desarrollado por los siguientes integrantes:  
@@ -38,6 +30,14 @@ El proyecto fue desarrollado por los siguientes integrantes:
 |----------------------|---------------------------------------------|
 | Kevin Ramos          | [kevinramos2](https://github.com/kevinramos2) |
 | Tomás Murillo        | [tmurilloa](https://github.com/tmurilloa)     |
-| Alejandro Martinez        | [Lualmara-5](https://github.com/Lualmara-5)   |
-| Daniel Garzón         | [Dgarzonac9](https://github.com/Dgarzonac)    |
-| Juan Miranda    | [DevSolidloper](https://github.com/DevSolidloper) |
+| Alejandro Martinez   | [Lualmara-5](https://github.com/Lualmara-5)   |
+| Daniel Garzón        |  [Dgarzonac9](https://github.com/Dgarzonac)    |
+| Juan Miranda         | [DevSolidloper](https://github.com/DevSolidloper) |  
+---  
+## 🔧 Requisitos de Instalación y Ejecución
+
+Para ejecutar el prototipo, es necesario instalar la biblioteca **reportLab**. Puedes hacerlo con el siguiente comando:  
+
+```bash
+pip install reportlab
+
